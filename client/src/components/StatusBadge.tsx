@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 
-type StatusType = 'Covered' | 'Partial' | 'Gap' | 'Draft' | 'In Progress' | 'Pending Review' | 'Approved' | 'Locked' | 'Open' | 'Resolved' | 'Critical' | 'High' | 'Medium' | 'Low' | 'Processed' | 'Processing' | 'Failed' | 'Pending';
+type StatusType = 'Covered' | 'Partial' | 'Gap' | 'Draft' | 'In Progress' | 'Pending Review' | 'Approved' | 'Locked' | 'Open' | 'Resolved' | 'Critical' | 'High' | 'Medium' | 'Low' | 'Ready' | 'Indexing' | 'Parsing' | 'Failed';
 
 interface StatusBadgeProps {
   status: StatusType;
@@ -22,10 +22,10 @@ const statusStyles: Record<StatusType, string> = {
   High: 'bg-orange-50 text-orange-700',
   Medium: 'bg-amber-50 text-amber-700',
   Low: 'bg-gray-100 text-gray-600',
-  Processed: 'bg-emerald-50 text-emerald-700',
-  Processing: 'bg-blue-50 text-blue-700',
+  Ready: 'bg-emerald-50 text-emerald-700',
+  Indexing: 'bg-blue-50 text-blue-700',
+  Parsing: 'bg-gray-100 text-gray-600',
   Failed: 'bg-red-50 text-red-700',
-  Pending: 'bg-amber-50 text-amber-700',
 };
 
 export function StatusBadge({ status, className }: StatusBadgeProps) {

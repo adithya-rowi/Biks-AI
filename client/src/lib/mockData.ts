@@ -1,16 +1,18 @@
 export type SafeguardStatus = 'Covered' | 'Partial' | 'Gap';
 export type WorkflowStatus = 'Draft' | 'In Progress' | 'Pending Review' | 'Approved' | 'Locked';
 export type FindingPriority = 'Critical' | 'High' | 'Medium' | 'Low';
-export type DocumentStatus = 'Processed' | 'Processing' | 'Failed' | 'Pending';
+export type DocumentStatus = 'Ready' | 'Indexing' | 'Parsing' | 'Failed';
 
 export interface Document {
   id: string;
   filename: string;
   type: string;
+  version: string;
   status: DocumentStatus;
   uploadedDate: string;
   uploadedBy: string;
   size: string;
+  usedInAssessment: boolean;
 }
 
 export interface Safeguard {
@@ -57,66 +59,80 @@ export interface Finding {
 export const documents: Document[] = [
   {
     id: 'doc-1',
-    filename: 'Asset_Inventory_2025.xlsx',
-    type: 'Inventory',
-    status: 'Processed',
-    uploadedDate: '2025-01-15',
+    filename: 'Information Security Policy.pdf',
+    type: 'Policy',
+    version: 'v3.0',
+    status: 'Ready',
+    uploadedDate: '2025-01-05',
     uploadedBy: 'Ahmad Wijaya',
-    size: '2.4 MB'
+    size: '2.4 MB',
+    usedInAssessment: true
   },
   {
     id: 'doc-2',
-    filename: 'Data_Protection_Policy.pdf',
-    type: 'Policy',
-    status: 'Processed',
-    uploadedDate: '2025-01-12',
+    filename: 'Asset Management Procedure.docx',
+    type: 'Procedure',
+    version: 'v1.2',
+    status: 'Ready',
+    uploadedDate: '2025-01-06',
     uploadedBy: 'Siti Rahayu',
-    size: '1.8 MB'
+    size: '1.8 MB',
+    usedInAssessment: true
   },
   {
     id: 'doc-3',
-    filename: 'Access_Control_Procedures.docx',
-    type: 'Procedure',
-    status: 'Processing',
-    uploadedDate: '2025-01-18',
+    filename: 'Access Control Policy.pdf',
+    type: 'Policy',
+    version: 'v2.1',
+    status: 'Indexing',
+    uploadedDate: '2025-01-10',
     uploadedBy: 'Budi Santoso',
-    size: '856 KB'
+    size: '856 KB',
+    usedInAssessment: false
   },
   {
     id: 'doc-4',
-    filename: 'Secure_Configuration_Standards.pdf',
-    type: 'Standard',
-    status: 'Processed',
+    filename: 'Incident Response Plan.docx',
+    type: 'Procedure',
+    version: 'v1.0',
+    status: 'Parsing',
     uploadedDate: '2025-01-10',
     uploadedBy: 'Dewi Lestari',
-    size: '3.1 MB'
+    size: '3.1 MB',
+    usedInAssessment: false
   },
   {
     id: 'doc-5',
-    filename: 'Vulnerability_Management_Process.pdf',
-    type: 'Process',
-    status: 'Pending',
-    uploadedDate: '2025-01-19',
+    filename: 'Data Classification Standard.pdf',
+    type: 'Standard',
+    version: 'v2.0',
+    status: 'Ready',
+    uploadedDate: '2025-01-08',
     uploadedBy: 'Eko Prasetyo',
-    size: '542 KB'
+    size: '542 KB',
+    usedInAssessment: true
   },
   {
     id: 'doc-6',
-    filename: 'Network_Diagram_2025.pdf',
+    filename: 'Network Security Architecture.pdf',
     type: 'Architecture',
-    status: 'Processed',
-    uploadedDate: '2025-01-08',
+    version: 'v1.5',
+    status: 'Ready',
+    uploadedDate: '2025-01-04',
     uploadedBy: 'Fajar Nugroho',
-    size: '4.7 MB'
+    size: '4.7 MB',
+    usedInAssessment: true
   },
   {
     id: 'doc-7',
-    filename: 'Security_Awareness_Training.pdf',
-    type: 'Training',
+    filename: 'Vulnerability Scan Report Q4.xlsx',
+    type: 'Report',
+    version: 'v1.0',
     status: 'Failed',
-    uploadedDate: '2025-01-17',
+    uploadedDate: '2025-01-09',
     uploadedBy: 'Gita Permata',
-    size: '1.2 MB'
+    size: '1.2 MB',
+    usedInAssessment: false
   }
 ];
 
