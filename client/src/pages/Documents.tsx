@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { documents } from '@/lib/mockData';
@@ -10,7 +9,7 @@ import {
   FileText, 
   FileSpreadsheet, 
   File,
-  MoreVertical,
+  MoreHorizontal,
   Download,
   Trash2,
   Eye
@@ -23,10 +22,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 const getFileIcon = (filename: string) => {
-  if (filename.endsWith('.pdf')) return <FileText className="w-5 h-5 text-red-500" />;
-  if (filename.endsWith('.xlsx') || filename.endsWith('.xls')) return <FileSpreadsheet className="w-5 h-5 text-emerald-600" />;
-  if (filename.endsWith('.docx') || filename.endsWith('.doc')) return <FileText className="w-5 h-5 text-blue-600" />;
-  return <File className="w-5 h-5 text-slate-500" />;
+  if (filename.endsWith('.pdf')) return <FileText className="w-4 h-4 text-red-500" strokeWidth={1.75} />;
+  if (filename.endsWith('.xlsx') || filename.endsWith('.xls')) return <FileSpreadsheet className="w-4 h-4 text-emerald-600" strokeWidth={1.75} />;
+  if (filename.endsWith('.docx') || filename.endsWith('.doc')) return <FileText className="w-4 h-4 text-blue-600" strokeWidth={1.75} />;
+  return <File className="w-4 h-4 text-gray-500" strokeWidth={1.75} />;
 };
 
 export default function Documents() {
@@ -38,104 +37,97 @@ export default function Documents() {
   );
 
   return (
-    <div className="space-y-6" data-testid="page-documents">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div className="max-w-[1200px] mx-auto space-y-6" data-testid="page-documents">
+      <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-foreground">Documents</h1>
-          <p className="text-muted-foreground mt-1">Manage your compliance documentation</p>
+          <h1 className="text-[22px] font-semibold text-[#111827] tracking-tight">Documents</h1>
+          <p className="text-[13px] text-[#6B7280] mt-1">Evidence and supporting documentation</p>
         </div>
-        <Button className="gap-2 shadow-md" data-testid="button-upload-document">
-          <Upload className="w-4 h-4" />
-          Upload Document
+        <Button size="sm" className="h-8 gap-1.5 text-[13px] font-medium shadow-sm" data-testid="button-upload-document">
+          <Upload className="w-3.5 h-3.5" strokeWidth={2} />
+          Upload
         </Button>
       </div>
 
-      <Card className="shadow-md border-0">
-        <CardHeader>
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <CardTitle className="text-lg font-semibold">All Documents</CardTitle>
-            <div className="relative w-full sm:w-80">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input
-                placeholder="Search documents..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-                data-testid="input-search-documents"
-              />
-            </div>
+      <div className="bg-white rounded-[14px] border border-[#E5E7EB] shadow-sm">
+        <div className="px-5 py-4 border-b border-[#E5E7EB]">
+          <div className="relative w-80">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9CA3AF]" strokeWidth={1.75} />
+            <Input
+              placeholder="Search documents..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-9 h-9 text-[13px] border-[#E5E7EB] bg-[#F9FAFB] focus:bg-white"
+              data-testid="input-search-documents"
+            />
           </div>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-border">
-                  <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase tracking-wider">Filename</th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase tracking-wider">Type</th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase tracking-wider">Uploaded</th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase tracking-wider">By</th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase tracking-wider">Size</th>
-                  <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase tracking-wider">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredDocuments.map((doc) => (
-                  <tr 
-                    key={doc.id} 
-                    className="border-b border-border/50 hover:bg-accent/30 transition-colors"
-                    data-testid={`document-row-${doc.id}`}
-                  >
-                    <td className="py-3 px-4">
-                      <div className="flex items-center gap-3">
-                        {getFileIcon(doc.filename)}
-                        <span className="text-sm font-medium">{doc.filename}</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4 text-sm text-muted-foreground">{doc.type}</td>
-                    <td className="py-3 px-4"><StatusBadge status={doc.status} /></td>
-                    <td className="py-3 px-4 text-sm text-muted-foreground">{doc.uploadedDate}</td>
-                    <td className="py-3 px-4 text-sm">{doc.uploadedBy}</td>
-                    <td className="py-3 px-4 text-sm text-muted-foreground">{doc.size}</td>
-                    <td className="py-3 px-4 text-right">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0" data-testid={`button-actions-${doc.id}`}>
-                            <MoreVertical className="w-4 h-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem>
-                            <Eye className="w-4 h-4 mr-2" />
-                            View
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <Download className="w-4 h-4 mr-2" />
-                            Download
-                          </DropdownMenuItem>
-                          <DropdownMenuItem className="text-destructive">
-                            <Trash2 className="w-4 h-4 mr-2" />
-                            Delete
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+        </div>
+        
+        <table className="w-full">
+          <thead>
+            <tr className="border-b border-[#E5E7EB]">
+              <th className="text-left py-3 px-5 text-[11px] font-medium text-[#6B7280] uppercase tracking-wider">Filename</th>
+              <th className="text-left py-3 px-5 text-[11px] font-medium text-[#6B7280] uppercase tracking-wider">Type</th>
+              <th className="text-left py-3 px-5 text-[11px] font-medium text-[#6B7280] uppercase tracking-wider">Status</th>
+              <th className="text-left py-3 px-5 text-[11px] font-medium text-[#6B7280] uppercase tracking-wider">Uploaded</th>
+              <th className="text-left py-3 px-5 text-[11px] font-medium text-[#6B7280] uppercase tracking-wider">By</th>
+              <th className="text-left py-3 px-5 text-[11px] font-medium text-[#6B7280] uppercase tracking-wider">Size</th>
+              <th className="w-12"></th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-[#F3F4F6]">
+            {filteredDocuments.map((doc) => (
+              <tr 
+                key={doc.id} 
+                className="hover:bg-[#F9FAFB] transition-colors"
+                data-testid={`document-row-${doc.id}`}
+              >
+                <td className="py-3 px-5">
+                  <div className="flex items-center gap-3">
+                    {getFileIcon(doc.filename)}
+                    <span className="text-[13px] font-medium text-[#111827]">{doc.filename}</span>
+                  </div>
+                </td>
+                <td className="py-3 px-5 text-[13px] text-[#6B7280]">{doc.type}</td>
+                <td className="py-3 px-5"><StatusBadge status={doc.status} /></td>
+                <td className="py-3 px-5 text-[13px] text-[#6B7280]">{doc.uploadedDate}</td>
+                <td className="py-3 px-5 text-[13px] text-[#374151]">{doc.uploadedBy}</td>
+                <td className="py-3 px-5 text-[13px] text-[#9CA3AF]">{doc.size}</td>
+                <td className="py-3 px-5">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button className="p-1.5 hover:bg-[#F3F4F6] rounded-md transition-colors" data-testid={`button-actions-${doc.id}`}>
+                        <MoreHorizontal className="w-4 h-4 text-[#9CA3AF]" strokeWidth={1.75} />
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-36">
+                      <DropdownMenuItem className="text-[13px]">
+                        <Eye className="w-4 h-4 mr-2" strokeWidth={1.75} />
+                        View
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="text-[13px]">
+                        <Download className="w-4 h-4 mr-2" strokeWidth={1.75} />
+                        Download
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="text-red-600 text-[13px]">
+                        <Trash2 className="w-4 h-4 mr-2" strokeWidth={1.75} />
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
-          {filteredDocuments.length === 0 && (
-            <div className="text-center py-12">
-              <FileText className="w-12 h-12 text-muted-foreground/50 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-muted-foreground">No documents found</h3>
-              <p className="text-sm text-muted-foreground/70 mt-1">Try adjusting your search query</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+        {filteredDocuments.length === 0 && (
+          <div className="text-center py-12">
+            <FileText className="w-10 h-10 text-[#D1D5DB] mx-auto mb-3" strokeWidth={1.5} />
+            <p className="text-[13px] text-[#6B7280]">No documents found</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import {
   LayoutDashboard, 
   FileText, 
   ClipboardCheck, 
-  AlertTriangle, 
+  AlertCircle, 
   FileBarChart,
   Plus,
   ChevronDown,
@@ -19,13 +19,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
 const navItems = [
   { path: '/overview', label: 'Overview', icon: LayoutDashboard },
   { path: '/documents', label: 'Documents', icon: FileText },
   { path: '/assessments', label: 'Assessments', icon: ClipboardCheck },
-  { path: '/findings', label: 'Findings', icon: AlertTriangle },
+  { path: '/findings', label: 'Findings', icon: AlertCircle },
   { path: '/reports', label: 'Reports', icon: FileBarChart },
 ];
 
@@ -37,18 +36,18 @@ export function AppShell({ children }: AppShellProps) {
   const [location] = useLocation();
 
   return (
-    <div className="min-h-screen flex bg-gradient-mint bg-blob">
-      <aside className="w-64 bg-sidebar text-sidebar-foreground flex flex-col shadow-xl" data-testid="sidebar">
-        <div className="h-16 flex items-center px-6 border-b border-sidebar-border">
-          <Link href="/overview" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-400 to-emerald-500 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">B</span>
+    <div className="min-h-screen flex bg-[#F9FAFB]">
+      <aside className="w-[220px] bg-[#0F766E] flex flex-col" data-testid="sidebar">
+        <div className="h-14 flex items-center px-5 border-b border-white/10">
+          <Link href="/overview" className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-md bg-white/10 flex items-center justify-center">
+              <span className="text-white font-semibold text-sm">B</span>
             </div>
-            <span className="text-xl font-semibold tracking-tight">Biks.ai</span>
+            <span className="text-[15px] font-semibold text-white tracking-tight">Biks.ai</span>
           </Link>
         </div>
 
-        <nav className="flex-1 px-3 py-4 space-y-1">
+        <nav className="flex-1 py-4">
           {navItems.map((item) => {
             const isActive = location.startsWith(item.path);
             const Icon = item.icon;
@@ -59,13 +58,16 @@ export function AppShell({ children }: AppShellProps) {
                 data-testid={`nav-${item.label.toLowerCase()}`}
               >
                 <div
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  className={`relative flex items-center gap-3 px-5 py-2.5 text-[13px] font-medium transition-colors ${
                     isActive
-                      ? 'bg-sidebar-primary text-sidebar-primary-foreground shadow-md'
-                      : 'text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+                      ? 'text-white bg-white/5'
+                      : 'text-white/70 hover:text-white hover:bg-white/5'
                   }`}
                 >
-                  <Icon className="w-5 h-5" strokeWidth={isActive ? 2 : 1.5} />
+                  {isActive && (
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-white rounded-r-full" />
+                  )}
+                  <Icon className="w-[18px] h-[18px]" strokeWidth={1.75} />
                   {item.label}
                 </div>
               </Link>
@@ -73,59 +75,51 @@ export function AppShell({ children }: AppShellProps) {
           })}
         </nav>
 
-        <div className="p-4 border-t border-sidebar-border">
-          <div className="text-xs text-sidebar-foreground/60 mb-2">
+        <div className="p-4 border-t border-white/10">
+          <div className="text-[11px] text-white/50 font-medium">
             PT Bank Nusantara Tbk
-          </div>
-          <div className="text-xs text-sidebar-foreground/40">
-            v1.2.0 • Enterprise
           </div>
         </div>
       </aside>
 
       <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
-        <header className="h-16 bg-white/80 backdrop-blur-sm border-b border-border flex items-center justify-between px-6 shadow-sm" data-testid="topbar">
+        <header className="h-14 bg-white border-b border-[#E5E7EB] flex items-center justify-between px-6" data-testid="topbar">
           <div className="flex items-center gap-4">
-            <h2 className="text-sm font-medium text-muted-foreground">
+            <span className="text-[13px] font-medium text-[#6B7280]">
               PT Bank Nusantara Tbk
-            </h2>
+            </span>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <Link href="/assessments">
-              <Button className="gap-2 shadow-md" data-testid="button-new-assessment">
-                <Plus className="w-4 h-4" />
+              <Button size="sm" className="h-8 gap-1.5 text-[13px] font-medium shadow-sm" data-testid="button-new-assessment">
+                <Plus className="w-3.5 h-3.5" strokeWidth={2} />
                 New Assessment
               </Button>
             </Link>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="flex items-center gap-2 hover:bg-accent rounded-lg px-2 py-1.5 transition-colors" data-testid="user-menu-trigger">
-                  <Avatar className="h-8 w-8">
-                    <AvatarFallback className="bg-primary/10 text-primary text-sm font-medium">
-                      AW
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="text-left hidden sm:block">
-                    <div className="text-sm font-medium">Ahmad Wijaya</div>
-                    <div className="text-xs text-muted-foreground">Compliance Manager</div>
+                <button className="flex items-center gap-2 hover:bg-[#F3F4F6] rounded-md px-2 py-1.5 transition-colors" data-testid="user-menu-trigger">
+                  <div className="w-7 h-7 rounded-full bg-[#0F766E] flex items-center justify-center">
+                    <span className="text-white text-[11px] font-medium">AW</span>
                   </div>
-                  <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-[13px] font-medium text-[#374151]">Ahmad Wijaya</span>
+                  <ChevronDown className="w-3.5 h-3.5 text-[#9CA3AF]" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuItem data-testid="menu-profile">
-                  <User className="w-4 h-4 mr-2" />
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem data-testid="menu-profile" className="text-[13px]">
+                  <User className="w-4 h-4 mr-2" strokeWidth={1.75} />
                   Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem data-testid="menu-settings">
-                  <Settings className="w-4 h-4 mr-2" />
+                <DropdownMenuItem data-testid="menu-settings" className="text-[13px]">
+                  <Settings className="w-4 h-4 mr-2" strokeWidth={1.75} />
                   Settings
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-destructive" data-testid="menu-logout">
-                  <LogOut className="w-4 h-4 mr-2" />
+                <DropdownMenuItem className="text-red-600 text-[13px]" data-testid="menu-logout">
+                  <LogOut className="w-4 h-4 mr-2" strokeWidth={1.75} />
                   Log out
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -133,7 +127,7 @@ export function AppShell({ children }: AppShellProps) {
           </div>
         </header>
 
-        <main className="flex-1 overflow-auto p-6 relative z-10">
+        <main className="flex-1 overflow-auto p-6">
           {children}
         </main>
       </div>

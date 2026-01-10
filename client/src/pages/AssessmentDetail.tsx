@@ -1,18 +1,8 @@
 import { useParams, Link } from 'wouter';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
 import { assessments } from '@/lib/mockData';
 import { StatusBadge } from '@/components/StatusBadge';
-import { 
-  ArrowLeft,
-  CheckCircle2,
-  AlertCircle,
-  XCircle,
-  Calendar,
-  User,
-  FileText
-} from 'lucide-react';
+import { ArrowLeft, FileText, CheckCircle2, AlertCircle, XCircle } from 'lucide-react';
 
 export default function AssessmentDetail() {
   const params = useParams<{ id: string }>();
@@ -22,11 +12,11 @@ export default function AssessmentDetail() {
     return (
       <div className="flex items-center justify-center h-96">
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-muted-foreground">Assessment not found</h2>
+          <p className="text-[15px] text-[#6B7280]">Assessment not found</p>
           <Link href="/assessments">
-            <Button variant="outline" className="mt-4 gap-2">
-              <ArrowLeft className="w-4 h-4" />
-              Back to Assessments
+            <Button variant="outline" size="sm" className="mt-4 gap-2 text-[13px]">
+              <ArrowLeft className="w-4 h-4" strokeWidth={1.75} />
+              Back
             </Button>
           </Link>
         </div>
@@ -34,193 +24,129 @@ export default function AssessmentDetail() {
     );
   }
 
-  const groupedControls = {
-    Gap: assessment.controls.filter(c => c.status === 'Gap'),
-    Partial: assessment.controls.filter(c => c.status === 'Partial'),
-    Covered: assessment.controls.filter(c => c.status === 'Covered'),
+  const groupedSafeguards = {
+    Gap: assessment.safeguards.filter(s => s.status === 'Gap'),
+    Partial: assessment.safeguards.filter(s => s.status === 'Partial'),
+    Covered: assessment.safeguards.filter(s => s.status === 'Covered'),
   };
 
   const statusConfig = {
-    Gap: { 
-      icon: XCircle, 
-      color: 'text-red-600', 
-      bgColor: 'bg-red-50',
-      borderColor: 'border-red-200',
-      label: 'Gap Controls'
-    },
-    Partial: { 
-      icon: AlertCircle, 
-      color: 'text-amber-600', 
-      bgColor: 'bg-amber-50',
-      borderColor: 'border-amber-200',
-      label: 'Partial Controls'
-    },
-    Covered: { 
-      icon: CheckCircle2, 
-      color: 'text-emerald-600', 
-      bgColor: 'bg-emerald-50',
-      borderColor: 'border-emerald-200',
-      label: 'Covered Controls'
-    },
+    Gap: { icon: XCircle, label: 'Gap', color: 'text-red-600', bg: 'bg-red-50', border: 'border-red-100' },
+    Partial: { icon: AlertCircle, label: 'Partial', color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-100' },
+    Covered: { icon: CheckCircle2, label: 'Covered', color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-100' },
   };
 
   return (
-    <div className="space-y-6" data-testid="page-assessment-detail">
+    <div className="max-w-[1200px] mx-auto space-y-6" data-testid="page-assessment-detail">
       <div className="flex items-center gap-4">
         <Link href="/assessments">
-          <Button variant="ghost" size="sm" className="gap-2" data-testid="button-back">
-            <ArrowLeft className="w-4 h-4" />
-            Back
-          </Button>
+          <button className="p-1.5 hover:bg-[#F3F4F6] rounded-md transition-colors" data-testid="button-back">
+            <ArrowLeft className="w-4 h-4 text-[#6B7280]" strokeWidth={1.75} />
+          </button>
         </Link>
-      </div>
-
-      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-        <div>
-          <div className="flex items-center gap-3 mb-2">
-            <h1 className="text-2xl font-semibold text-foreground">{assessment.name}</h1>
+        <div className="flex-1">
+          <div className="flex items-center gap-3">
+            <h1 className="text-[20px] font-semibold text-[#111827] tracking-tight">{assessment.name}</h1>
             <StatusBadge status={assessment.status} />
           </div>
-          <p className="text-muted-foreground">{assessment.framework}</p>
+          <p className="text-[13px] text-[#6B7280] mt-0.5">{assessment.framework}</p>
         </div>
+        <Button variant="outline" size="sm" className="h-8 gap-1.5 text-[13px]" data-testid="button-export">
+          <FileText className="w-3.5 h-3.5" strokeWidth={1.75} />
+          Export
+        </Button>
+      </div>
 
-        <div className="flex flex-wrap gap-3">
-          <Button variant="outline" className="gap-2" data-testid="button-export">
-            <FileText className="w-4 h-4" />
-            Export Report
-          </Button>
-          <Button className="gap-2 shadow-md" data-testid="button-continue-assessment">
-            Continue Assessment
-          </Button>
+      <div className="grid grid-cols-4 gap-4">
+        <div className="bg-white rounded-[14px] border border-[#E5E7EB] p-4 shadow-sm">
+          <span className="text-[11px] font-medium text-[#6B7280] uppercase tracking-wide">Progress</span>
+          <div className="mt-2 flex items-center gap-3">
+            <div className="flex-1 h-1.5 rounded-full bg-[#F3F4F6] overflow-hidden">
+              <div className="h-full bg-[#0F766E] rounded-full" style={{ width: `${assessment.progress}%` }} />
+            </div>
+            <span className="text-[14px] font-semibold text-[#111827]">{assessment.progress}%</span>
+          </div>
+        </div>
+        <div className="bg-white rounded-[14px] border border-[#E5E7EB] p-4 shadow-sm">
+          <span className="text-[11px] font-medium text-[#6B7280] uppercase tracking-wide">Owner</span>
+          <p className="mt-2 text-[14px] font-medium text-[#111827]">{assessment.owner}</p>
+        </div>
+        <div className="bg-white rounded-[14px] border border-[#E5E7EB] p-4 shadow-sm">
+          <span className="text-[11px] font-medium text-[#6B7280] uppercase tracking-wide">Due Date</span>
+          <p className="mt-2 text-[14px] font-medium text-[#111827]">{assessment.dueDate}</p>
+        </div>
+        <div className="bg-white rounded-[14px] border border-[#E5E7EB] p-4 shadow-sm">
+          <span className="text-[11px] font-medium text-[#6B7280] uppercase tracking-wide">Safeguards</span>
+          <p className="mt-2 text-[14px] font-medium text-[#111827]">{assessment.safeguards.length} Total</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="shadow-sm border-0">
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                <Progress value={assessment.progress} className="w-6 h-6 hidden" />
-                <span className="text-sm font-bold text-primary">{assessment.progress}%</span>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Progress</p>
-                <p className="font-semibold">{assessment.progress}% Complete</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="shadow-sm border-0">
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
-                <User className="w-5 h-5 text-muted-foreground" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Owner</p>
-                <p className="font-semibold">{assessment.owner}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="shadow-sm border-0">
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
-                <Calendar className="w-5 h-5 text-muted-foreground" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Due Date</p>
-                <p className="font-semibold">{assessment.dueDate}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="shadow-sm border-0">
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
-                <FileText className="w-5 h-5 text-muted-foreground" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Controls</p>
-                <p className="font-semibold">{assessment.controls.length} Total</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="flex items-center gap-2 p-3 bg-white rounded-lg border border-border">
-        <div className="flex-1">
-          <Progress value={assessment.progress} className="h-3" />
+      <div className="flex items-center gap-6 px-4 py-3 bg-white rounded-[14px] border border-[#E5E7EB] shadow-sm">
+        <div className="flex-1 flex h-2 rounded-full overflow-hidden bg-[#F3F4F6]">
+          <div className="bg-emerald-500" style={{ width: `${(groupedSafeguards.Covered.length / assessment.safeguards.length) * 100}%` }} />
+          <div className="bg-amber-400" style={{ width: `${(groupedSafeguards.Partial.length / assessment.safeguards.length) * 100}%` }} />
+          <div className="bg-red-400" style={{ width: `${(groupedSafeguards.Gap.length / assessment.safeguards.length) * 100}%` }} />
         </div>
-        <div className="flex items-center gap-4 text-sm">
+        <div className="flex items-center gap-4 text-[12px]">
           <span className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-emerald-500" />
-            {groupedControls.Covered.length} Covered
+            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            <span className="text-[#6B7280]">Covered</span>
+            <span className="font-semibold text-[#111827]">{groupedSafeguards.Covered.length}</span>
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-amber-500" />
-            {groupedControls.Partial.length} Partial
+            <span className="w-2 h-2 rounded-full bg-amber-400" />
+            <span className="text-[#6B7280]">Partial</span>
+            <span className="font-semibold text-[#111827]">{groupedSafeguards.Partial.length}</span>
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-red-500" />
-            {groupedControls.Gap.length} Gap
+            <span className="w-2 h-2 rounded-full bg-red-400" />
+            <span className="text-[#6B7280]">Gap</span>
+            <span className="font-semibold text-[#111827]">{groupedSafeguards.Gap.length}</span>
           </span>
         </div>
       </div>
 
       <div className="space-y-6">
         {(['Gap', 'Partial', 'Covered'] as const).map((status) => {
-          const controls = groupedControls[status];
+          const safeguards = groupedSafeguards[status];
           const config = statusConfig[status];
           const Icon = config.icon;
 
-          if (controls.length === 0) return null;
+          if (safeguards.length === 0) return null;
 
           return (
-            <Card key={status} className={`shadow-md border-0 ${config.bgColor}`} data-testid={`section-${status.toLowerCase()}`}>
-              <CardHeader className={`border-b ${config.borderColor}`}>
-                <CardTitle className={`text-lg font-semibold flex items-center gap-2 ${config.color}`}>
-                  <Icon className="w-5 h-5" />
-                  {config.label}
-                  <span className="ml-2 text-sm font-normal text-muted-foreground">({controls.length})</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-4">
-                <div className="space-y-3">
-                  {controls.map((control) => (
-                    <Link key={control.id} href={`/assessments/${assessment.id}/controls/${control.id}`}>
-                      <div 
-                        className="p-4 bg-white rounded-lg border border-border hover:border-primary/30 hover:shadow-sm transition-all cursor-pointer"
-                        data-testid={`control-item-${control.id}`}
-                      >
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="font-mono text-sm font-medium text-primary">{control.code}</span>
-                              <span className="text-sm font-medium">{control.name}</span>
-                            </div>
-                            <p className="text-sm text-muted-foreground line-clamp-2">{control.description}</p>
+            <div key={status} data-testid={`section-${status.toLowerCase()}`}>
+              <div className="flex items-center gap-2 mb-3">
+                <Icon className={`w-4 h-4 ${config.color}`} strokeWidth={1.75} />
+                <h3 className={`text-[13px] font-semibold ${config.color}`}>{config.label}</h3>
+                <span className="text-[12px] text-[#9CA3AF]">({safeguards.length})</span>
+              </div>
+              
+              <div className="space-y-2">
+                {safeguards.map((safeguard) => (
+                  <Link key={safeguard.id} href={`/assessments/${assessment.id}/controls/${safeguard.id}`}>
+                    <div 
+                      className={`p-4 bg-white rounded-[12px] border ${config.border} hover:border-[#0F766E]/30 transition-all cursor-pointer`}
+                      data-testid={`safeguard-item-${safeguard.id}`}
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[12px] font-mono font-semibold text-[#0F766E]">{safeguard.cisId}</span>
+                            <span className="text-[13px] font-medium text-[#111827]">{safeguard.name}</span>
                           </div>
-                          <div className="flex items-center gap-3">
-                            <div className="text-right">
-                              <p className="text-xs text-muted-foreground">Owner</p>
-                              <p className="text-sm">{control.owner}</p>
-                            </div>
-                            <StatusBadge status={control.status} />
-                          </div>
+                          <p className="text-[12px] text-[#6B7280] mt-1 line-clamp-1">{safeguard.description}</p>
+                        </div>
+                        <div className="flex items-center gap-4 flex-shrink-0">
+                          <span className="text-[11px] text-[#9CA3AF]">{safeguard.owner}</span>
+                          <StatusBadge status={safeguard.status} />
                         </div>
                       </div>
-                    </Link>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
           );
         })}
       </div>
