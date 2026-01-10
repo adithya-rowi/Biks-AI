@@ -1,0 +1,82 @@
+Build the Control Detail page. This is what users see when they CLICK on a specific control like "1.1" from the assessment.
+
+ROUTE: /assessments/:id/controls/:control_id
+
+THIS IS A DETAIL PAGE FOR ONE CONTROL. DO NOT show a list of controls.
+
+HEADER:
+- Breadcrumb: Assessments > CIS IG1 January 2025 > 1.1
+- Title: "1.1 — Establish and Maintain Detailed Enterprise Asset Inventory"
+- Status badge: Gap (red) / Partial (amber) / Covered (green)
+- Score block: "60%" + "3 of 5 criteria met"
+- Small text under score: "Score calculated from criteria (no AI judgment)"
+
+TWO-COLUMN LAYOUT (left: truth, right: action)
+
+LEFT COLUMN:
+
+SECTION: Policy Criteria
+Table with 5 rows showing criteria evaluation:
+
+| Status | Criterion | Citation | Action |
+|--------|-----------|----------|--------|
+| ✓ Met | Asset inventory exists and is documented | Info Security Policy v3.0 · p12 · §3.1 | Override |
+| ✓ Met | Inventory includes hardware assets | Asset Mgmt Procedure v1.2 · p5 · §2.1 | Override |
+| ✓ Met | Inventory includes virtual/cloud assets | Asset Mgmt Procedure v1.2 · p7 · §2.3 | Override |
+| ✗ Not Met | Update frequency is defined | No evidence found | Override |
+| ✗ Not Met | Owner/responsible party assigned | No evidence found | Override |
+
+Status icons:
+- Met: Green checkmark
+- Partial: Amber dot
+- Not Met: Red X
+- Insufficient Evidence: Gray ?
+
+Override action: Opens modal requiring:
+- New status selection
+- Required justification text field (cannot be empty)
+- Change is logged in history with timestamp + user
+
+SECTION: Evidence Viewer
+When clicking a citation link, show panel:
+- Document: filename + version + page + section
+- Excerpt: 2-3 lines with EXACT CITED SENTENCE highlighted in yellow
+- Buttons: "Open in document", "Copy citation"
+
+RIGHT COLUMN:
+
+SECTION: Recommended Actions (only shown for Gap or Partial)
+- One short paragraph
+- 3 bullet action items max
+- "Copy" button
+
+SECTION: Remediation Assignment
+- Owner: dropdown (Budi Santoso, Siti Rahayu, Unassigned)
+- Due date: date picker
+- Status: Not Started / In Progress / Blocked / Implemented
+- Notes: textarea
+- Hint text: "All changes are tracked in history"
+
+SECTION: Change History (collapsible by default)
+Timeline showing:
+- Criterion overrides with reason
+- Owner assignments
+- Status changes
+- Each entry: timestamp + user + action
+
+FOOTER:
+- "Save Changes" (primary button)
+- "Lock Control" (outline button, opens confirmation modal)
+
+LOCK CONFIRMATION MODAL:
+- Title: "Lock this control?"
+- Text: "Once locked, criteria and evidence cannot be modified. This action cannot be undone."
+- Buttons: "Cancel" / "Lock Control"
+
+LOCKED STATE:
+- Top banner: "Locked by Ahmad Wijaya on 2025-01-10"
+- All inputs disabled
+- Save button hidden
+- Show "Export" button instead
+
+This is an auditor's workspace. Dense, precise, traceable. Every claim needs proof.
