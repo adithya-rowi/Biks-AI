@@ -1,0 +1,84 @@
+Build the most important screen: Control Detail. This must feel like an auditor's workspace, not a task manager.
+
+ROUTE: /assessments/:id/controls/:control_id
+
+NON-NEGOTIABLES:
+- CIS Controls IG1 only
+- Deterministic scoring: score computed from criteria (met/partial/not_met). AI never sets final status.
+- Every criterion shows audit citation: document + version + page + section. No vague "View" links.
+- Reviewer can override at criterion level with required reason + logged change.
+- Locking freezes edits and shows "Locked" banner with who/when.
+
+LAYOUT:
+- Two-column on desktop (left: audit content, right: workflow)
+- Single column on mobile
+- Match existing app styling
+
+HEADER:
+- Breadcrumb: Assessments > CIS IG1 Assessment - January 2025 > Control 1.1
+- Title: "1.1 — Establish and Maintain Detailed Enterprise Asset Inventory"
+- Status badge: Covered (green) / Partial (amber) / Gap (red)
+- Score: "60%" + "3 of 5 criteria met"
+- Metadata: Last assessed, Reviewer, Document count
+
+LEFT COLUMN (Audit Content)
+
+SECTION A: Policy Criteria
+Table columns: Status | Criterion | Citation | Actions
+
+5 rows:
+1. Asset inventory exists and is documented
+2. Inventory includes hardware assets
+3. Inventory includes virtual/cloud assets
+4. Update frequency is defined
+5. Owner/responsible party assigned
+
+Status icons:
+- Met: Green checkmark
+- Partial: Amber dot
+- Not Met: Red X
+- Insufficient Evidence: Gray ?
+
+Citation format (if evidence exists):
+"Information Security Policy v3.0 · p12 · §3.1"
++ subtle "Open excerpt" action
+
+Row actions:
+- "Override" (modal: status + required reason)
+- If no evidence: "No evidence found"
+
+SECTION B: Evidence Viewer
+When "Open excerpt" clicked, show panel:
+- Source: filename + version + page + section
+- Excerpt: 2-4 lines
+- Buttons: "Open in document", "Copy citation"
+Panel tied to selected criterion only.
+
+RIGHT COLUMN (Workflow)
+
+SECTION C: Recommended Actions (Gap/Partial only)
+- One paragraph max
+- 3 bullet steps max
+- "Copy" button
+
+SECTION D: Remediation Assignment
+- Owner dropdown
+- Due date picker
+- Status: Not Started / In Progress / Blocked / Implemented
+- Reviewer notes textarea
+- Hint: "Changes tracked in history"
+
+SECTION E: Change History (collapsible)
+Timeline: timestamp + actor + change
+
+FOOTER:
+- "Override Control Status" (secondary)
+- "Save Changes" (primary)
+- "Lock Control" (outline, confirmation required)
+
+LOCKED STATE:
+- Top banner: "Locked by Ahmad Wijaya on 2025-01-10"
+- All inputs disabled
+- Save → Export
+
+Keep it calm, precise, audit-grade.
