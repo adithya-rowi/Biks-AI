@@ -204,7 +204,7 @@ export const safeguards: Safeguard[] = [
     id: 'sg-6',
     cisId: '3.4',
     name: 'Enforce Data Retention',
-    description: 'Retain data according to the enterprise's data management process.',
+    description: 'Retain data according to the enterprise data management process.',
     status: 'Partial',
     criteria: [
       { id: 'c1', text: 'Data retention policy exists', met: true },
