@@ -1,14 +1,35 @@
 import { Link } from 'wouter';
-import { dashboardStats, assessments, findings } from '@/lib/mockData';
+import { useQuery } from '@tanstack/react-query';
+import { api } from '@/lib/api';
 import { StatusBadge } from '@/components/StatusBadge';
 import { ArrowRight, TrendingUp } from 'lucide-react';
 
 export default function Overview() {
-  const { maturityScore, maxScore, openFindings, coverageBreakdown, safeguardsTotal, pendingReview } = dashboardStats;
-  const coveredCount = coverageBreakdown.covered;
+  const { data: assessments = [] } = useQuery({
+    queryKey: ['assessments'],
+    queryFn: api.assessments.getAll,
+  });
 
-  const recentFindings = findings.filter(f => f.status !== 'Resolved').slice(0, 5);
-  const activeAssessment = assessments.find(a => a.status === 'In Progress');
+  const { data: findings = [] } = useQuery({
+    queryKey: ['findings'],
+    queryFn: async () => {
+      if (assessments.length === 0) return [];
+      return api.findings.getByAssessment(assessments[0].id);
+    },
+    enabled: assessments.length > 0,
+  });
+
+  const activeAssessment = assessments.find(a => a.status === 'in_progress');
+  const maturityScore = activeAssessment?.maturityScore || 0;
+  const maxScore = 100;
+  const openFindings = findings.filter(f => f.status === 'open' || f.status === 'in_progress').length;
+  const safeguardsTotal = activeAssessment?.totalControls || 56;
+  const coveredCount = activeAssessment?.controlsCovered || 0;
+  const partialCount = activeAssessment?.controlsPartial || 0;
+  const gapCount = activeAssessment?.controlsGap || 0;
+  const pendingReview = 0;
+
+  const recentFindings = findings.filter(f => f.status !== 'resolved').slice(0, 5);
 
   return (
     <div className="max-w-[1200px] mx-auto space-y-8" data-testid="page-overview">
@@ -66,15 +87,15 @@ export default function Overview() {
             <div className="flex h-3 rounded-full overflow-hidden bg-[#F3F4F6]">
               <div 
                 className="bg-emerald-500 transition-all duration-500"
-                style={{ width: `${(coverageBreakdown.covered / safeguardsTotal) * 100}%` }}
+                style={{ width: `${(coveredCount / safeguardsTotal) * 100}%` }}
               />
               <div 
                 className="bg-amber-400 transition-all duration-500"
-                style={{ width: `${(coverageBreakdown.partial / safeguardsTotal) * 100}%` }}
+                style={{ width: `${(partialCount / safeguardsTotal) * 100}%` }}
               />
               <div 
                 className="bg-red-400 transition-all duration-500"
-                style={{ width: `${(coverageBreakdown.gap / safeguardsTotal) * 100}%` }}
+                style={{ width: `${(gapCount / safeguardsTotal) * 100}%` }}
               />
             </div>
 
@@ -82,17 +103,17 @@ export default function Overview() {
               <div className="flex items-center gap-2">
                 <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                 <span className="text-[12px] text-[#6B7280]">Covered</span>
-                <span className="text-[12px] font-semibold text-[#111827]">{coverageBreakdown.covered}</span>
+                <span className="text-[12px] font-semibold text-[#111827]">{coveredCount}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />
                 <span className="text-[12px] text-[#6B7280]">Partial</span>
-                <span className="text-[12px] font-semibold text-[#111827]">{coverageBreakdown.partial}</span>
+                <span className="text-[12px] font-semibold text-[#111827]">{partialCount}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
                 <span className="text-[12px] text-[#6B7280]">Gap</span>
-                <span className="text-[12px] font-semibold text-[#111827]">{coverageBreakdown.gap}</span>
+                <span className="text-[12px] font-semibold text-[#111827]">{gapCount}</span>
               </div>
             </div>
           </div>
@@ -106,15 +127,21 @@ export default function Overview() {
             </div>
             
             <div className="divide-y divide-[#F3F4F6]">
-              {recentFindings.map((finding) => (
-                <div key={finding.id} className="px-5 py-3 flex items-center gap-4 hover:bg-[#F9FAFB] transition-colors" data-testid={`finding-row-${finding.id}`}>
-                  <span className="w-12 text-[12px] font-mono font-medium text-[#0F766E]">{finding.safeguardId}</span>
-                  <span className="flex-1 text-[13px] text-[#374151] truncate">{finding.title}</span>
-                  <StatusBadge status={finding.status} />
-                  <span className="w-28 text-[12px] text-[#6B7280] text-right">{finding.owner}</span>
-                  <span className="w-24 text-[12px] text-[#9CA3AF] text-right">{finding.dueDate}</span>
+              {recentFindings.length > 0 ? (
+                recentFindings.map((finding) => (
+                  <div key={finding.id} className="px-5 py-3 flex items-center gap-4 hover:bg-[#F9FAFB] transition-colors" data-testid={`finding-row-${finding.id}`}>
+                    <span className="w-12 text-[12px] font-mono font-medium text-[#0F766E]">{finding.cisId}</span>
+                    <span className="flex-1 text-[13px] text-[#374151] truncate">{finding.title}</span>
+                    <StatusBadge status={finding.status === 'open' ? 'Gap' : finding.status === 'in_progress' ? 'Partial' : 'Covered'} />
+                    <span className="w-28 text-[12px] text-[#6B7280] text-right">{finding.assignedTo || 'Unassigned'}</span>
+                    <span className="w-24 text-[12px] text-[#9CA3AF] text-right">{finding.dueDate || '—'}</span>
+                  </div>
+                ))
+              ) : (
+                <div className="px-5 py-8 text-center text-[13px] text-[#9CA3AF]">
+                  No findings yet
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </div>
@@ -125,53 +152,36 @@ export default function Overview() {
               <div className="bg-white rounded-[14px] border border-[#E5E7EB] p-5 shadow-sm hover:border-[#0F766E]/30 transition-colors cursor-pointer" data-testid="card-active-assessment">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-[13px] font-semibold text-[#111827]">Active Assessment</h3>
-                  <StatusBadge status={activeAssessment.status} />
+                  <StatusBadge status={activeAssessment.status === 'in_progress' ? 'Partial' : 'Covered'} />
                 </div>
-                
-                <p className="text-[14px] font-medium text-[#111827] mb-1">{activeAssessment.name}</p>
+                <p className="text-[15px] text-[#374151] font-medium mb-2">{activeAssessment.name}</p>
                 <p className="text-[12px] text-[#6B7280] mb-4">{activeAssessment.framework}</p>
-
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-[12px]">
-                    <span className="text-[#6B7280]">Progress</span>
-                    <span className="font-medium text-[#111827]">{activeAssessment.progress}%</span>
-                  </div>
-                  <div className="h-1.5 rounded-full bg-[#F3F4F6] overflow-hidden">
-                    <div 
-                      className="h-full bg-[#0F766E] rounded-full transition-all duration-500"
-                      style={{ width: `${activeAssessment.progress}%` }}
-                    />
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between mt-4 pt-4 border-t border-[#F3F4F6]">
-                  <span className="text-[11px] text-[#9CA3AF]">Due {activeAssessment.dueDate}</span>
-                  <span className="text-[11px] text-[#6B7280]">{activeAssessment.owner}</span>
+                <div className="flex items-center justify-between text-[11px] text-[#9CA3AF]">
+                  <span>Due {activeAssessment.dueDate}</span>
+                  <ArrowRight className="w-3 h-3 text-[#0F766E]" strokeWidth={2} />
                 </div>
               </div>
             </Link>
           )}
 
-          <div className="bg-white rounded-[14px] border border-[#E5E7EB] p-5 shadow-sm">
-            <h3 className="text-[13px] font-semibold text-[#111827] mb-4">Quick Stats</h3>
-            
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-[12px] text-[#6B7280]">Total Safeguards</span>
-                <span className="text-[12px] font-semibold text-[#111827]">{safeguardsTotal}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-[12px] text-[#6B7280]">Coverage Rate</span>
-                <span className="text-[12px] font-semibold text-[#111827]">{Math.round((coverageBreakdown.covered / safeguardsTotal) * 100)}%</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-[12px] text-[#6B7280]">Critical Findings</span>
-                <span className="text-[12px] font-semibold text-red-600">{findings.filter(f => f.priority === 'Critical' && f.status !== 'Resolved').length}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-[12px] text-[#6B7280]">High Priority</span>
-                <span className="text-[12px] font-semibold text-orange-600">{findings.filter(f => f.priority === 'High' && f.status !== 'Resolved').length}</span>
-              </div>
+          <div className="bg-white rounded-[14px] border border-[#E5E7EB] p-5 shadow-sm" data-testid="card-quick-actions">
+            <h3 className="text-[13px] font-semibold text-[#111827] mb-4">Quick Actions</h3>
+            <div className="space-y-2">
+              <Link href="/documents">
+                <button className="w-full text-left px-3 py-2 rounded-lg text-[13px] text-[#374151] hover:bg-[#F9FAFB] transition-colors">
+                  Upload Evidence
+                </button>
+              </Link>
+              <Link href="/assessments">
+                <button className="w-full text-left px-3 py-2 rounded-lg text-[13px] text-[#374151] hover:bg-[#F9FAFB] transition-colors">
+                  View Assessments
+                </button>
+              </Link>
+              <Link href="/findings">
+                <button className="w-full text-left px-3 py-2 rounded-lg text-[13px] text-[#374151] hover:bg-[#F9FAFB] transition-colors">
+                  Review Findings
+                </button>
+              </Link>
             </div>
           </div>
         </div>
