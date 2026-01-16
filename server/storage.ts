@@ -17,6 +17,8 @@ import {
   type InsertFinding,
   type TeamMember,
   type InsertTeamMember,
+  type ExportJob,
+  type InsertExportJob,
   users,
   assessments,
   documents,
@@ -25,6 +27,7 @@ import {
   changeHistory,
   findings,
   teamMembers,
+  exportJobs,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -55,6 +58,7 @@ export interface IStorage {
   getSafeguard(id: string): Promise<Safeguard | undefined>;
   getSafeguardByAssessmentAndCisId(assessmentId: string, cisId: string): Promise<Safeguard | undefined>;
   createSafeguard(safeguard: InsertSafeguard): Promise<Safeguard>;
+  createSafeguardsBatch(safeguards: InsertSafeguard[]): Promise<Safeguard[]>;
   updateSafeguard(id: string, data: Partial<InsertSafeguard>): Promise<Safeguard | undefined>;
   lockSafeguard(id: string, lockedBy: string): Promise<Safeguard | undefined>;
 
@@ -62,6 +66,7 @@ export interface IStorage {
   getCriteriaBySafeguard(safeguardId: string): Promise<Criterion[]>;
   getCriterion(id: string): Promise<Criterion | undefined>;
   createCriterion(criterion: InsertCriterion): Promise<Criterion>;
+  createCriteriaBatch(criteria: InsertCriterion[]): Promise<Criterion[]>;
   updateCriterion(id: string, data: Partial<InsertCriterion>): Promise<Criterion | undefined>;
 
   // Change History
@@ -72,6 +77,12 @@ export interface IStorage {
   getFindingsByAssessment(assessmentId: string): Promise<Finding[]>;
   createFinding(finding: InsertFinding): Promise<Finding>;
   updateFinding(id: string, data: Partial<InsertFinding>): Promise<Finding | undefined>;
+
+  // Export Jobs
+  getExportJob(id: string): Promise<ExportJob | undefined>;
+  getExportJobsByAssessment(assessmentId: string): Promise<ExportJob[]>;
+  createExportJob(job: InsertExportJob): Promise<ExportJob>;
+  updateExportJob(id: string, data: Partial<InsertExportJob>): Promise<ExportJob | undefined>;
 }
 
 export class PostgresStorage implements IStorage {
@@ -178,6 +189,11 @@ export class PostgresStorage implements IStorage {
     return result[0];
   }
 
+  async createSafeguardsBatch(safeguardList: InsertSafeguard[]): Promise<Safeguard[]> {
+    if (safeguardList.length === 0) return [];
+    return db.insert(safeguards).values(safeguardList).returning();
+  }
+
   async updateSafeguard(id: string, data: Partial<InsertSafeguard>): Promise<Safeguard | undefined> {
     const result = await db.update(safeguards).set(data).where(eq(safeguards.id, id)).returning();
     return result[0];
@@ -207,6 +223,11 @@ export class PostgresStorage implements IStorage {
     return result[0];
   }
 
+  async createCriteriaBatch(criteriaList: InsertCriterion[]): Promise<Criterion[]> {
+    if (criteriaList.length === 0) return [];
+    return db.insert(criteria).values(criteriaList).returning();
+  }
+
   async updateCriterion(id: string, data: Partial<InsertCriterion>): Promise<Criterion | undefined> {
     const result = await db.update(criteria).set(data).where(eq(criteria.id, id)).returning();
     return result[0];
@@ -234,6 +255,26 @@ export class PostgresStorage implements IStorage {
 
   async updateFinding(id: string, data: Partial<InsertFinding>): Promise<Finding | undefined> {
     const result = await db.update(findings).set(data).where(eq(findings.id, id)).returning();
+    return result[0];
+  }
+
+  // Export Jobs
+  async getExportJob(id: string): Promise<ExportJob | undefined> {
+    const result = await db.select().from(exportJobs).where(eq(exportJobs.id, id)).limit(1);
+    return result[0];
+  }
+
+  async getExportJobsByAssessment(assessmentId: string): Promise<ExportJob[]> {
+    return db.select().from(exportJobs).where(eq(exportJobs.assessmentId, assessmentId)).orderBy(desc(exportJobs.requestedAt));
+  }
+
+  async createExportJob(job: InsertExportJob): Promise<ExportJob> {
+    const result = await db.insert(exportJobs).values(job).returning();
+    return result[0];
+  }
+
+  async updateExportJob(id: string, data: Partial<InsertExportJob>): Promise<ExportJob | undefined> {
+    const result = await db.update(exportJobs).set(data).where(eq(exportJobs.id, id)).returning();
     return result[0];
   }
 }

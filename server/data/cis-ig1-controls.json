@@ -1,0 +1,1122 @@
+[
+  {
+    "safeguard_id": "1.1",
+    "control_id": 1,
+    "title": "Establish and Maintain Detailed Enterprise Asset Inventory",
+    "description": "Establish and maintain an accurate, detailed, and up-to-date inventory of all enterprise assets with the potential to store or process data, to include: end-user devices (including portable and mobile), network devices, non-computing/IoT devices, and servers. Ensure the inventory records the network address (if static), hardware address, machine name, enterprise asset owner, department for each asset, and whether the asset has been approved to connect to the network. For mobile end-user devices, MDM type tools can support this process, where appropriate. This inventory includes assets connected to the infrastructure physically, virtually, remotely, and those within cloud environments. Additionally, it includes assets that are regularly connected to the enterprise’s network infrastructure, even if they are not under control of the enterprise. Review and update the inventory of all enterprise assets bi-annually, or more frequently.",
+    "asset_class": "Devices",
+    "security_function": "Identify",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Record",
+    "evidence_required": "Asset inventory listing all hardware devices",
+    "evidence_examples": [
+      "Spreadsheet with columns: Asset Name, Type (laptop/server/network), Serial Number, Owner, Department, IP Address, MAC Address, Status (approved/pending)",
+      "Export from asset management tool (Snipe-IT, ManageEngine, Lansweeper)",
+      "Network scan results showing discovered devices"
+    ],
+    "practical_tip": "Start with a simple spreadsheet. Walk around and list every device. Update every 6 months minimum.",
+    "for_beginners": "Google Sheet is fine for <100 devices. Include at minimum: device name, who uses it, what type, and is it approved."
+  },
+  {
+    "safeguard_id": "1.2",
+    "control_id": 1,
+    "title": "Address Unauthorized Assets",
+    "description": "Ensure that a process exists to address unauthorized assets on a weekly basis. The enterprise may choose to remove the asset from the network, deny the asset from connecting remotely to the network, or quarantine the asset.",
+    "asset_class": "Devices",
+    "security_function": "Respond",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Procedure + Record",
+    "evidence_required": "Process for handling unauthorized devices + log of actions taken",
+    "evidence_examples": [
+      "Written procedure: 'When unknown device found, IT will [quarantine/remove/investigate] within [X] days'",
+      "Log showing: Date, Device found, Action taken, Who handled it",
+      "Email/ticket records of unauthorized device incidents"
+    ],
+    "practical_tip": "Weekly review of asset list vs network scan. Document what you do with unknown devices.",
+    "for_beginners": "Simple rule: 'Unknown device = disconnect first, ask questions later.' Log it in a spreadsheet."
+  },
+  {
+    "safeguard_id": "2.1",
+    "control_id": 2,
+    "title": "Establish and Maintain a Software Inventory",
+    "description": "Establish and maintain a detailed inventory of all licensed software installed on enterprise assets. The software inventory must document the title, publisher, initial install/use date, and business purpose for each entry; where appropriate, include the Uniform Resource Locator (URL), app store(s), version(s), deployment mechanism, decommission date, and number of licenses. Review and update the software inventory bi-annually, or more frequently.",
+    "asset_class": "Software",
+    "security_function": "Identify",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Record",
+    "evidence_required": "Software inventory listing all installed applications",
+    "evidence_examples": [
+      "Spreadsheet: Software Name, Version, Publisher, License Count, Business Purpose, Install Date",
+      "Export from software inventory tool (PDQ Inventory, ManageEngine, SCCM)",
+      "List of approved software with license documentation"
+    ],
+    "practical_tip": "Focus on business-critical and paid software first. Include operating systems.",
+    "for_beginners": "List what's installed on each computer. Start with: Office, antivirus, business apps, OS versions."
+  },
+  {
+    "safeguard_id": "2.2",
+    "control_id": 2,
+    "title": "Ensure Authorized Software is Currently Supported ",
+    "description": "Ensure that only currently supported software is designated as authorized in the software inventory for enterprise assets. If software is unsupported, yet necessary for the fulfillment of the enterprise’s mission, document an exception detailing mitigating controls and residual risk acceptance. For any unsupported software without an exception documentation, designate as unauthorized. Review the software list to verify software support at least monthly, or more frequently.",
+    "asset_class": "Software",
+    "security_function": "Identify",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Record + Review",
+    "evidence_required": "Software list with support status + evidence of monthly review",
+    "evidence_examples": [
+      "Software inventory with column: 'Vendor Support End Date' or 'Supported? Y/N'",
+      "Monthly review log: 'Checked software support status on [date], found [X] unsupported items'",
+      "Exception documentation for any unsupported software still in use"
+    ],
+    "practical_tip": "Check vendor websites for end-of-life dates. Windows 10 support, Office versions, etc.",
+    "for_beginners": "Add a column to your software list: 'Still supported by vendor?' Check monthly."
+  },
+  {
+    "safeguard_id": "2.3",
+    "control_id": 2,
+    "title": "Address Unauthorized Software",
+    "description": "Ensure that unauthorized software is either removed from use on enterprise assets or receives a documented exception. Review monthly, or more frequently.",
+    "asset_class": "Software",
+    "security_function": "Respond",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Procedure + Record",
+    "evidence_required": "Process for removing unauthorized software + action log",
+    "evidence_examples": [
+      "Policy statement: 'Only IT-approved software may be installed'",
+      "Log of unauthorized software found and removed",
+      "Exception request form for software not on approved list"
+    ],
+    "practical_tip": "Monthly scan for new software. Remove or document exceptions.",
+    "for_beginners": "Rule: 'If you didn't approve it, remove it.' Keep a log of what you removed and when."
+  },
+  {
+    "safeguard_id": "3.1",
+    "control_id": 3,
+    "title": "Establish and Maintain a Data Management Process",
+    "description": "Establish and maintain a documented data management process. In the process, address data sensitivity, data owner, handling of data, data retention limits, and disposal requirements, based on sensitivity and retention standards for the enterprise. Review and update documentation annually, or when significant enterprise changes occur that could impact this Safeguard.",
+    "asset_class": "Data",
+    "security_function": "Govern",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Policy",
+    "evidence_required": "Documented data management policy covering classification, handling, retention, disposal",
+    "evidence_examples": [
+      "Data Management Policy document covering: data types, sensitivity levels, who owns what data, how long to keep, how to dispose",
+      "Data classification matrix (Public, Internal, Confidential, Restricted)",
+      "Annual review record of the policy"
+    ],
+    "practical_tip": "Keep it simple: What data do we have? How sensitive? How long do we keep it? How do we delete it?",
+    "for_beginners": "One-page policy is fine. Define 3 levels: Public (anyone can see), Internal (employees only), Confidential (need-to-know)."
+  },
+  {
+    "safeguard_id": "3.2",
+    "control_id": 3,
+    "title": "Establish and Maintain a Data Inventory",
+    "description": "Establish and maintain a data inventory based on the enterprise’s data management process. Inventory sensitive data, at a minimum. Review and update inventory annually, at a minimum, with a priority on sensitive data.",
+    "asset_class": "Data",
+    "security_function": "Identify",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Record",
+    "evidence_required": "Inventory of data assets, especially sensitive data",
+    "evidence_examples": [
+      "Spreadsheet: Data Type, Location (server/cloud/paper), Owner, Sensitivity Level, Retention Period",
+      "List of databases and file shares with contents description",
+      "Map of where patient records/financial data/PII is stored"
+    ],
+    "practical_tip": "Start with your most sensitive data: patient records, financial data, employee PII. Where does it live?",
+    "for_beginners": "Ask each department: 'What sensitive data do you handle and where is it stored?' Document answers."
+  },
+  {
+    "safeguard_id": "3.3",
+    "control_id": 3,
+    "title": "Configure Data Access Control Lists",
+    "description": "Configure data access control lists based on a user’s need to know. Apply data access control lists, also known as access permissions, to local and remote file systems, databases, and applications.",
+    "asset_class": "Data",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical",
+    "evidence_required": "Evidence that data access is restricted based on need-to-know",
+    "evidence_examples": [
+      "Screenshot of folder permissions showing role-based access",
+      "User access matrix: Who has access to what data/systems",
+      "Database permission report showing restricted access to sensitive tables"
+    ],
+    "practical_tip": "Review shared folder permissions. Remove 'Everyone' access. Use groups, not individual users.",
+    "for_beginners": "Check your file server: Can everyone access everything? They shouldn't. Finance folder = Finance team only."
+  },
+  {
+    "safeguard_id": "3.4",
+    "control_id": 3,
+    "title": "Enforce Data Retention",
+    "description": "Retain data according to the enterprise’s documented data management process. Data retention must include both minimum and maximum timelines.",
+    "asset_class": "Data",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Policy + Record",
+    "evidence_required": "Retention policy + evidence it's being followed",
+    "evidence_examples": [
+      "Data retention schedule: Data Type, Minimum retention, Maximum retention, Disposal method",
+      "Log of data disposal activities",
+      "Automated retention rules in email/file systems"
+    ],
+    "practical_tip": "Check legal requirements first (medical records, financial records). Then set retention periods.",
+    "for_beginners": "Simple table: 'Patient records = 10 years. Emails = 3 years. Logs = 1 year.' Then actually delete old data."
+  },
+  {
+    "safeguard_id": "3.5",
+    "control_id": 3,
+    "title": "Securely Dispose of Data",
+    "description": "Securely dispose of data as outlined in the enterprise’s documented data management process. Ensure the disposal process and method are commensurate with the data sensitivity.",
+    "asset_class": "Data",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Procedure + Record",
+    "evidence_required": "Secure disposal process + evidence of disposal",
+    "evidence_examples": [
+      "Data disposal procedure (digital: secure wipe/destroy; paper: shred)",
+      "Certificates of destruction from disposal vendors",
+      "Log of devices/media securely wiped before disposal"
+    ],
+    "practical_tip": "Old hard drives: wipe with DBAN or physically destroy. Paper: cross-cut shredder. Keep certificates.",
+    "for_beginners": "Never throw away a hard drive without wiping it. Use free tools like DBAN. Keep a log: 'Wiped laptop #X on [date]'."
+  },
+  {
+    "safeguard_id": "3.6",
+    "control_id": 3,
+    "title": "Encrypt Data on End-User Devices",
+    "description": "Encrypt data on end-user devices containing sensitive data. Example implementations can include: Windows BitLocker®, Apple FileVault®, Linux® dm-crypt.",
+    "asset_class": "Data",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical",
+    "evidence_required": "Evidence that device encryption is enabled on all endpoints",
+    "evidence_examples": [
+      "Screenshot of BitLocker/FileVault enabled on devices",
+      "MDM report showing encryption status across all devices",
+      "Policy requiring encryption + spot-check evidence"
+    ],
+    "practical_tip": "Windows: BitLocker. Mac: FileVault. Both are free and built-in. Enable on all laptops.",
+    "for_beginners": "Turn on BitLocker (Windows) or FileVault (Mac) on every laptop. Screenshot the status. This protects data if laptop is stolen."
+  },
+  {
+    "safeguard_id": "4.1",
+    "control_id": 4,
+    "title": "Establish and Maintain a Secure Configuration Process",
+    "description": "Establish and maintain a documented secure configuration process for enterprise assets (end-user devices, including portable and mobile, non-computing/IoT devices, and servers) and software (operating systems and applications). Review and update documentation annually, or when significant enterprise changes occur that could impact this Safeguard.",
+    "asset_class": "Documentation",
+    "security_function": "Govern",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Policy",
+    "evidence_required": "Documented secure configuration process for devices and software",
+    "evidence_examples": [
+      "Secure Configuration Policy/Standard document",
+      "Baseline configuration checklist for new devices",
+      "Annual review record of configuration standards"
+    ],
+    "practical_tip": "Define baseline settings: password requirements, firewall on, auto-update on, guest account disabled.",
+    "for_beginners": "One-page checklist: 'Before any new laptop goes to user, IT must: [enable firewall, set password policy, install antivirus, enable encryption]'."
+  },
+  {
+    "safeguard_id": "4.2",
+    "control_id": 4,
+    "title": "Establish and Maintain a Secure Configuration Process for Network Infrastructure",
+    "description": "Establish and maintain a documented secure configuration process for network devices. Review and update documentation annually, or when significant enterprise changes occur that could impact this Safeguard.",
+    "asset_class": "Documentation",
+    "security_function": "Govern",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Policy",
+    "evidence_required": "Documented secure configuration process for network devices",
+    "evidence_examples": [
+      "Network device hardening standard (routers, switches, firewalls)",
+      "Baseline configuration template for network devices",
+      "Change management log for network configuration changes"
+    ],
+    "practical_tip": "Cover: default passwords changed, unused ports disabled, firmware updated, admin access restricted.",
+    "for_beginners": "Checklist for routers/switches: Change default password, disable unused ports, update firmware, enable logging."
+  },
+  {
+    "safeguard_id": "4.3",
+    "control_id": 4,
+    "title": "Configure Automatic Session Locking on Enterprise Assets",
+    "description": "Configure automatic session locking on enterprise assets after a defined period of inactivity. For general purpose operating systems, the period must not exceed 15 minutes. For mobile end-user devices, the period must not exceed 2 minutes.",
+    "asset_class": "Devices",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical",
+    "evidence_required": "Evidence that screen lock is enforced on all devices",
+    "evidence_examples": [
+      "Group Policy screenshot showing screen lock timeout (≤15 min for computers, ≤2 min for mobile)",
+      "MDM policy showing lock screen requirements",
+      "Spot-check screenshots from sample devices"
+    ],
+    "practical_tip": "Windows: Group Policy → 15 minute timeout. Mobile: 2 minute timeout. Require password to unlock.",
+    "for_beginners": "Set computers to lock after 15 minutes idle. Phones lock after 2 minutes. Screenshot the setting as proof."
+  },
+  {
+    "safeguard_id": "4.4",
+    "control_id": 4,
+    "title": "Implement and Manage a Firewall on Servers",
+    "description": "Implement and manage a firewall on servers, where supported. Example implementations include a virtual firewall, operating system firewall, or a third-party firewall agent.",
+    "asset_class": "Devices",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical",
+    "evidence_required": "Evidence that firewall is enabled on all servers",
+    "evidence_examples": [
+      "Screenshot of Windows Firewall enabled on servers",
+      "iptables/firewalld rules from Linux servers",
+      "Server inventory with firewall status column"
+    ],
+    "practical_tip": "Windows Server: Enable Windows Firewall. Linux: Enable firewalld or iptables. Allow only needed ports.",
+    "for_beginners": "Check each server: Is firewall on? Screenshot it. Make a list: 'Server X - Firewall ON - Date checked'."
+  },
+  {
+    "safeguard_id": "4.5",
+    "control_id": 4,
+    "title": "Implement and Manage a Firewall on End-User Devices",
+    "description": "Implement and manage a host-based firewall or port-filtering tool on end-user devices, with a default-deny rule that drops all traffic except those services and ports that are explicitly allowed.",
+    "asset_class": "Devices",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical",
+    "evidence_required": "Evidence that firewall is enabled on all endpoints",
+    "evidence_examples": [
+      "Group Policy showing Windows Firewall enabled",
+      "MDM report showing firewall status across devices",
+      "Antivirus console showing firewall enabled (if using endpoint protection suite)"
+    ],
+    "practical_tip": "Windows Firewall should be ON by default. Use Group Policy to prevent users from disabling it.",
+    "for_beginners": "Check: Is Windows Firewall on? Use Group Policy to enforce it. Can't be turned off by users."
+  },
+  {
+    "safeguard_id": "4.6",
+    "control_id": 4,
+    "title": "Securely Manage Enterprise Assets and Software",
+    "description": "Securely manage enterprise assets and software. Example implementations include managing configuration through version-controlled Infrastructure-as-Code (IaC) and accessing administrative interfaces over secure network protocols, such as Secure Shell (SSH) and Hypertext Transfer Protocol Secure (HTTPS). Do not use insecure management protocols, such as Telnet (Teletype Network) and HTTP, unless operationally essential.",
+    "asset_class": "Devices",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical + Procedure",
+    "evidence_required": "Evidence of secure management protocols (SSH/HTTPS, no Telnet/HTTP)",
+    "evidence_examples": [
+      "Network diagram showing management VLAN or secure access",
+      "Configuration showing SSH enabled, Telnet disabled on network devices",
+      "Admin access via HTTPS only (screenshot of admin console URL)"
+    ],
+    "practical_tip": "Never use Telnet or HTTP for admin access. SSH for CLI, HTTPS for web consoles.",
+    "for_beginners": "Check your router/switch admin page: Is it HTTPS (has padlock)? If HTTP, that's insecure. Change it."
+  },
+  {
+    "safeguard_id": "4.7",
+    "control_id": 4,
+    "title": "Manage Default Accounts on Enterprise Assets and Software",
+    "description": "Manage default accounts on enterprise assets and software, such as root, administrator, and other pre-configured vendor accounts. Example implementations can include: disabling default accounts or making them unusable.",
+    "asset_class": "Users",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical + Record",
+    "evidence_required": "Evidence that default accounts are disabled or passwords changed",
+    "evidence_examples": [
+      "Checklist: 'Default admin account disabled/renamed on: [list of systems]'",
+      "Screenshot showing default 'Administrator' account disabled",
+      "Password change log for default accounts that cannot be disabled"
+    ],
+    "practical_tip": "Disable or rename 'Administrator', 'admin', 'root' where possible. Change all default passwords.",
+    "for_beginners": "Every router, server, application has a default account. Find them, change password or disable. Document it."
+  },
+  {
+    "safeguard_id": "5.1",
+    "control_id": 5,
+    "title": "Establish and Maintain an Inventory of Accounts",
+    "description": "Establish and maintain an inventory of all accounts managed in the enterprise. The inventory must at a minimum include user, administrator, and service accounts. The inventory, at a minimum, should contain the person’s name, username, start/stop dates, and department. Validate that all active accounts are authorized, on a recurring schedule at a minimum quarterly, or more frequently.",
+    "asset_class": "Users",
+    "security_function": "Identify",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Record",
+    "evidence_required": "Inventory of all user, admin, and service accounts",
+    "evidence_examples": [
+      "Active Directory user export with columns: Username, Full Name, Department, Account Type, Status, Last Login",
+      "Spreadsheet of all accounts across systems",
+      "Quarterly account review records"
+    ],
+    "practical_tip": "Export from Active Directory or user database. Include: who, what access, still active?, last login date.",
+    "for_beginners": "List all user accounts. For each: Name, username, department, is it still active? Review quarterly."
+  },
+  {
+    "safeguard_id": "5.2",
+    "control_id": 5,
+    "title": "Use Unique Passwords",
+    "description": "Use unique passwords for all enterprise assets. Best practice implementation includes, at a minimum, an 8-character password for accounts using Multi-Factor Authentication (MFA) and a 14-character password for accounts not using MFA. ",
+    "asset_class": "Users",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Policy + Technical",
+    "evidence_required": "Password policy requiring unique passwords + enforcement evidence",
+    "evidence_examples": [
+      "Password policy document (min 8 chars with MFA, or min 14 chars without)",
+      "Active Directory password policy screenshot",
+      "Password manager deployment evidence (if used)"
+    ],
+    "practical_tip": "Enforce via Group Policy: minimum length, complexity. Better: deploy a password manager.",
+    "for_beginners": "Set password policy: At least 8 characters if using MFA, 14 if not. Screenshot the Group Policy setting."
+  },
+  {
+    "safeguard_id": "5.3",
+    "control_id": 5,
+    "title": "Disable Dormant Accounts",
+    "description": "Delete or disable any dormant accounts after a period of 45 days of inactivity, where supported.",
+    "asset_class": "Users",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Procedure + Record",
+    "evidence_required": "Process for disabling inactive accounts + evidence of execution",
+    "evidence_examples": [
+      "Procedure: 'Accounts inactive for 45 days will be disabled'",
+      "Report showing last login dates for all accounts",
+      "Log of accounts disabled due to inactivity"
+    ],
+    "practical_tip": "Run monthly: Find accounts with no login in 45 days. Disable them. Keep a log.",
+    "for_beginners": "Check Active Directory: Who hasn't logged in for 45 days? Disable those accounts. Document: 'Disabled [user] on [date] - no login since [date]'."
+  },
+  {
+    "safeguard_id": "5.4",
+    "control_id": 5,
+    "title": "Restrict Administrator Privileges to Dedicated Administrator Accounts",
+    "description": "Restrict administrator privileges to dedicated administrator accounts on enterprise assets. Conduct general computing activities, such as internet browsing, email, and productivity suite use, from the user’s primary, non-privileged account.",
+    "asset_class": "Users",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Policy + Technical",
+    "evidence_required": "Evidence that admin rights are on separate accounts, not daily-use accounts",
+    "evidence_examples": [
+      "Policy: 'IT staff must use standard account for daily work, separate admin account for admin tasks'",
+      "List of admin accounts showing naming convention (e.g., adm-john vs john)",
+      "Screenshot showing admin accounts are separate from regular accounts"
+    ],
+    "practical_tip": "IT staff: one account for email/browsing, separate account for admin work. Never browse internet with admin account.",
+    "for_beginners": "If you're IT admin, have two accounts: 'john' for daily work, 'admin-john' for admin tasks. Never use admin account for email."
+  },
+  {
+    "safeguard_id": "6.1",
+    "control_id": 6,
+    "title": "Establish an Access Granting Process",
+    "description": "Establish and follow a documented process, preferably automated, for granting access to enterprise assets upon new hire or role change of a user.",
+    "asset_class": "Documentation",
+    "security_function": "Govern",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Procedure",
+    "evidence_required": "Documented process for granting access to new hires or role changes",
+    "evidence_examples": [
+      "Access request form/workflow",
+      "New hire onboarding checklist including access provisioning",
+      "Approval records for access requests"
+    ],
+    "practical_tip": "Simple form: Who needs access? To what? Approved by? Granted by whom on what date?",
+    "for_beginners": "Create a simple form: Employee name, what access needed, manager approval, IT grants access, date completed."
+  },
+  {
+    "safeguard_id": "6.2",
+    "control_id": 6,
+    "title": "Establish an Access Revoking Process",
+    "description": "Establish and follow a process, preferably automated, for revoking access to enterprise assets, through disabling accounts immediately upon termination, rights revocation, or role change of a user. Disabling accounts, instead of deleting accounts, may be necessary to preserve audit trails.",
+    "asset_class": "Documentation",
+    "security_function": "Govern",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Procedure",
+    "evidence_required": "Documented process for revoking access upon termination or role change",
+    "evidence_examples": [
+      "Offboarding checklist including access removal steps",
+      "HR notification process to IT for terminations",
+      "Log of access revocations with dates"
+    ],
+    "practical_tip": "HR notifies IT immediately on termination. IT disables account same day. Document with date/time.",
+    "for_beginners": "Checklist for when someone leaves: 1) HR tells IT, 2) IT disables account immediately, 3) Log it. Same day, no exceptions."
+  },
+  {
+    "safeguard_id": "6.3",
+    "control_id": 6,
+    "title": "Require MFA for Externally-Exposed Applications",
+    "description": "Require all externally-exposed enterprise or third-party applications to enforce MFA, where supported. Enforcing MFA through a directory service or SSO provider is a satisfactory implementation of this Safeguard.",
+    "asset_class": "Users",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical",
+    "evidence_required": "Evidence that MFA is enabled on all external-facing applications",
+    "evidence_examples": [
+      "Screenshot of MFA enabled on email (Office 365, Google Workspace)",
+      "VPN configuration showing MFA requirement",
+      "List of external apps with MFA status for each"
+    ],
+    "practical_tip": "Priority: Email, VPN, cloud apps (Office 365, Google, Salesforce). Enable MFA on all of them.",
+    "for_beginners": "Enable MFA on: 1) Email, 2) VPN, 3) Any cloud app accessed from internet. Screenshot the MFA settings as proof."
+  },
+  {
+    "safeguard_id": "6.4",
+    "control_id": 6,
+    "title": "Require MFA for Remote Network Access",
+    "description": "Require MFA for remote network access.",
+    "asset_class": "Users",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical",
+    "evidence_required": "Evidence that VPN or remote access requires MFA",
+    "evidence_examples": [
+      "VPN configuration showing MFA enabled",
+      "Remote desktop gateway with MFA",
+      "Screenshot of MFA prompt when connecting remotely"
+    ],
+    "practical_tip": "Anyone connecting to company network from outside MUST use MFA. No exceptions.",
+    "for_beginners": "VPN without MFA = easy target for hackers. Enable MFA on your VPN. Screenshot the config."
+  },
+  {
+    "safeguard_id": "6.5",
+    "control_id": 6,
+    "title": "Require MFA for Administrative Access",
+    "description": "Require MFA for all administrative access accounts, where supported, on all enterprise assets, whether managed on-site or through a service provider.",
+    "asset_class": "Users",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical",
+    "evidence_required": "Evidence that all admin accounts require MFA",
+    "evidence_examples": [
+      "Azure AD / Active Directory showing MFA enforced for admin accounts",
+      "Cloud console (AWS, Azure, GCP) MFA settings",
+      "Admin portal MFA configuration screenshot"
+    ],
+    "practical_tip": "All admin accounts (domain admin, cloud admin, firewall admin) MUST have MFA. First priority.",
+    "for_beginners": "Your most powerful accounts need MFA first. Domain admin, cloud admin, firewall admin. Enable MFA today."
+  },
+  {
+    "safeguard_id": "7.1",
+    "control_id": 7,
+    "title": "Establish and Maintain a Vulnerability Management Process",
+    "description": "Establish and maintain a documented vulnerability management process for enterprise assets. Review and update documentation annually, or when significant enterprise changes occur that could impact this Safeguard.",
+    "asset_class": "Documentation",
+    "security_function": "Govern",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Policy",
+    "evidence_required": "Documented vulnerability management process",
+    "evidence_examples": [
+      "Vulnerability Management Policy/Procedure document",
+      "Process flow: scan → assess → prioritize → remediate → verify",
+      "Annual review record of the process"
+    ],
+    "practical_tip": "Define: How often do we scan? Who reviews results? How fast do we patch critical vs low?",
+    "for_beginners": "Simple process: Scan monthly, fix critical issues within 7 days, high within 30 days. Write it down."
+  },
+  {
+    "safeguard_id": "7.2",
+    "control_id": 7,
+    "title": "Establish and Maintain a Remediation Process",
+    "description": "Establish and maintain a risk-based remediation strategy documented in a remediation process, with monthly, or more frequent, reviews.",
+    "asset_class": "Documentation",
+    "security_function": "Govern",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Policy",
+    "evidence_required": "Documented remediation process with risk-based prioritization",
+    "evidence_examples": [
+      "Remediation SLA document (Critical: 7 days, High: 30 days, Medium: 90 days)",
+      "Vulnerability tracking spreadsheet or ticketing system",
+      "Monthly review records of remediation progress"
+    ],
+    "practical_tip": "Set SLAs by severity. Track in a spreadsheet or ticketing system. Review monthly.",
+    "for_beginners": "Table: Critical=fix in 7 days, High=30 days, Medium=90 days, Low=180 days. Track progress."
+  },
+  {
+    "safeguard_id": "7.3",
+    "control_id": 7,
+    "title": "Perform Automated Operating System Patch Management",
+    "description": "Perform operating system updates on enterprise assets through automated patch management on a monthly, or more frequent, basis.",
+    "asset_class": "Software",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical",
+    "evidence_required": "Evidence that OS patches are deployed automatically",
+    "evidence_examples": [
+      "WSUS/SCCM/Intune patch deployment report",
+      "Windows Update settings via Group Policy",
+      "Linux: unattended-upgrades configuration or patch management tool"
+    ],
+    "practical_tip": "Windows: Use WSUS or enable Windows Update. Linux: Enable automatic security updates.",
+    "for_beginners": "Enable Windows Update on all PCs via Group Policy. Monthly check: Are all machines updated?"
+  },
+  {
+    "safeguard_id": "7.4",
+    "control_id": 7,
+    "title": "Perform Automated Application Patch Management",
+    "description": "Perform application updates on enterprise assets through automated patch management on a monthly, or more frequent, basis.",
+    "asset_class": "Software",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical",
+    "evidence_required": "Evidence that application patches are deployed regularly",
+    "evidence_examples": [
+      "Patch management tool report (PDQ Deploy, SCCM, Intune)",
+      "Auto-update settings for critical apps (Chrome, Adobe, Java)",
+      "Monthly application patch compliance report"
+    ],
+    "practical_tip": "Enable auto-update for browsers, PDF readers, Java. Use patch tool for others.",
+    "for_beginners": "Turn on auto-update for Chrome, Firefox, Adobe Reader. For other apps, update monthly. Document it."
+  },
+  {
+    "safeguard_id": "8.1",
+    "control_id": 8,
+    "title": "Establish and Maintain an Audit Log Management Process",
+    "description": "Establish and maintain a documented audit log management process that defines the enterprise’s logging requirements. At a minimum, address the collection, review, and retention of audit logs for enterprise assets. Review and update documentation annually, or when significant enterprise changes occur that could impact this Safeguard.",
+    "asset_class": "Documentation",
+    "security_function": "Govern",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Policy",
+    "evidence_required": "Documented log management process covering collection, review, retention",
+    "evidence_examples": [
+      "Audit Log Management Policy document",
+      "Log retention schedule (what logs, how long)",
+      "Annual review record of the policy"
+    ],
+    "practical_tip": "Define: What do we log? Where do logs go? How long do we keep them? Who reviews them?",
+    "for_beginners": "Simple policy: Log all logins and admin actions. Keep logs for 1 year. Review weekly for anomalies."
+  },
+  {
+    "safeguard_id": "8.2",
+    "control_id": 8,
+    "title": "Collect Audit Logs",
+    "description": "Collect audit logs. Ensure that logging, per the enterprise’s audit log management process, has been enabled across enterprise assets.",
+    "asset_class": "Data",
+    "security_function": "Detect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical",
+    "evidence_required": "Evidence that logging is enabled on enterprise assets",
+    "evidence_examples": [
+      "Windows Event Log settings (success/failure auditing enabled)",
+      "Server/firewall/application log configuration screenshots",
+      "Central log server receiving logs from multiple sources"
+    ],
+    "practical_tip": "Enable: Login success/failure, account changes, privilege use, system events.",
+    "for_beginners": "Windows: Enable auditing via Group Policy. Check: Are events appearing in Event Viewer? Screenshot it."
+  },
+  {
+    "safeguard_id": "8.3",
+    "control_id": 8,
+    "title": "Ensure Adequate Audit Log Storage",
+    "description": "Ensure that logging destinations maintain adequate storage to comply with the enterprise’s audit log management process.",
+    "asset_class": "Data",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical",
+    "evidence_required": "Evidence that log storage is sufficient for retention requirements",
+    "evidence_examples": [
+      "Log storage capacity report (GB used, GB available)",
+      "Log rotation settings preventing overflow",
+      "Central log server disk allocation"
+    ],
+    "practical_tip": "Calculate: logs per day × retention days = storage needed. Add 20% buffer.",
+    "for_beginners": "Check: Are your logs being overwritten too soon? Increase Event Log max size or send to central server."
+  },
+  {
+    "safeguard_id": "9.1",
+    "control_id": 9,
+    "title": "Ensure Use of Only Fully Supported Browsers and Email Clients",
+    "description": "Ensure only fully supported browsers and email clients are allowed to execute in the enterprise, only using the latest version of browsers and email clients provided through the vendor.",
+    "asset_class": "Software",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical + Record",
+    "evidence_required": "Evidence that only current browser/email versions are in use",
+    "evidence_examples": [
+      "Browser version report across all devices",
+      "Group Policy enforcing Chrome/Edge auto-update",
+      "Email client version inventory"
+    ],
+    "practical_tip": "Block old IE versions. Enforce Chrome/Edge/Firefox latest via Group Policy or MDM.",
+    "for_beginners": "Check: What browser versions are installed? Block Internet Explorer. Enable auto-update for Chrome/Edge."
+  },
+  {
+    "safeguard_id": "9.2",
+    "control_id": 9,
+    "title": "Use DNS Filtering Services",
+    "description": "Use DNS filtering services on all end-user devices, including remote and on-premises assets, to block access to known malicious domains.",
+    "asset_class": "Devices",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical",
+    "evidence_required": "Evidence that DNS filtering blocks malicious domains",
+    "evidence_examples": [
+      "DNS filter configuration (Cisco Umbrella, Cloudflare Gateway, OpenDNS)",
+      "Network settings pointing to filtered DNS servers",
+      "Block logs showing malicious domains blocked"
+    ],
+    "practical_tip": "Use Cloudflare (1.1.1.2), Quad9 (9.9.9.9), or Cisco Umbrella. Free options available.",
+    "for_beginners": "Change DNS on your router to 9.9.9.9 (Quad9) or 1.1.1.2 (Cloudflare malware blocking). Free and easy."
+  },
+  {
+    "safeguard_id": "10.1",
+    "control_id": 10,
+    "title": "Deploy and Maintain Anti-Malware Software",
+    "description": "Deploy and maintain anti-malware software on all enterprise assets.",
+    "asset_class": "Devices",
+    "security_function": "Detect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical",
+    "evidence_required": "Evidence that anti-malware is installed on all devices",
+    "evidence_examples": [
+      "Anti-malware console showing all devices with agent installed",
+      "Deployment report with coverage percentage",
+      "Spot-check screenshots from sample devices"
+    ],
+    "practical_tip": "Windows Defender is included free. Or use enterprise: CrowdStrike, SentinelOne, Sophos.",
+    "for_beginners": "At minimum: Windows Defender on all PCs. Check: Is it enabled? Screenshot from 5 random PCs."
+  },
+  {
+    "safeguard_id": "10.2",
+    "control_id": 10,
+    "title": "Configure Automatic Anti-Malware Signature Updates",
+    "description": "Configure automatic updates for anti-malware signature files on all enterprise assets.",
+    "asset_class": "Devices",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical",
+    "evidence_required": "Evidence that anti-malware updates automatically",
+    "evidence_examples": [
+      "Anti-malware console showing update status and last update date",
+      "Windows Defender update settings via Group Policy",
+      "Report showing signature versions across devices"
+    ],
+    "practical_tip": "Enable automatic updates. Check console: When was last signature update? Should be today or yesterday.",
+    "for_beginners": "Check Windows Defender: Is 'automatic sample submission' and 'cloud protection' enabled? That keeps it updated."
+  },
+  {
+    "safeguard_id": "10.3",
+    "control_id": 10,
+    "title": "Disable Autorun and Autoplay for Removable Media",
+    "description": "Disable autorun and autoplay auto-execute functionality for removable media.",
+    "asset_class": "Devices",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical",
+    "evidence_required": "Evidence that autorun/autoplay is disabled",
+    "evidence_examples": [
+      "Group Policy setting disabling autorun for all drives",
+      "Registry settings showing autorun disabled",
+      "MDM policy for mobile devices"
+    ],
+    "practical_tip": "Group Policy: 'Turn off Autoplay' = Enabled for all drives. Prevents USB malware auto-execution.",
+    "for_beginners": "Set via Group Policy: Computer Config → Admin Templates → Windows Components → AutoPlay → Turn off Autoplay: Enabled."
+  },
+  {
+    "safeguard_id": "11.1",
+    "control_id": 11,
+    "title": "Establish and Maintain a Data Recovery Process ",
+    "description": "Establish and maintain a documented data recovery process that includes detailed backup procedures. In the process, address the scope of data recovery activities, recovery prioritization, and the security of backup data. Review and update documentation annually, or when significant enterprise changes occur that could impact this Safeguard.",
+    "asset_class": "Documentation",
+    "security_function": "Govern",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Policy",
+    "evidence_required": "Documented backup and recovery process",
+    "evidence_examples": [
+      "Backup and Recovery Policy document",
+      "Backup schedule (what, when, where)",
+      "Recovery procedure with step-by-step instructions"
+    ],
+    "practical_tip": "Cover: What data is backed up? How often? Where are backups stored? How to restore?",
+    "for_beginners": "Write down: 1) What we backup (servers, files), 2) When (daily), 3) Where (cloud/offsite), 4) How to restore."
+  },
+  {
+    "safeguard_id": "11.2",
+    "control_id": 11,
+    "title": "Perform Automated Backups ",
+    "description": "Perform automated backups of in-scope enterprise assets. Run backups weekly, or more frequently, based on the sensitivity of the data.",
+    "asset_class": "Data",
+    "security_function": "Recover",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical",
+    "evidence_required": "Evidence that automated backups are running",
+    "evidence_examples": [
+      "Backup job logs showing successful completions",
+      "Backup software dashboard with schedule and status",
+      "Cloud backup (OneDrive, Google Drive, Backblaze) sync status"
+    ],
+    "practical_tip": "Use built-in (Windows Backup, Time Machine) or cloud (Backblaze, Veeam, Acronis). Automate it.",
+    "for_beginners": "Turn on Windows Backup or use cloud backup. Check: Are backups running? Screenshot the log."
+  },
+  {
+    "safeguard_id": "11.3",
+    "control_id": 11,
+    "title": "Protect Recovery Data",
+    "description": "Protect recovery data with equivalent controls to the original data. Reference encryption or data separation, based on requirements.",
+    "asset_class": "Data",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical",
+    "evidence_required": "Evidence that backup data is protected (encrypted, access-controlled)",
+    "evidence_examples": [
+      "Backup encryption settings enabled",
+      "Access controls on backup storage (who can access)",
+      "Separate credentials for backup system"
+    ],
+    "practical_tip": "Encrypt backups. Use separate backup admin account. Don't store backup password with regular credentials.",
+    "for_beginners": "Enable encryption in backup software. Use different password for backups than regular admin password."
+  },
+  {
+    "safeguard_id": "11.4",
+    "control_id": 11,
+    "title": "Establish and Maintain an Isolated Instance of Recovery Data ",
+    "description": "Establish and maintain an isolated instance of recovery data. Example implementations include, version controlling backup destinations through offline, cloud, or off-site systems or services.",
+    "asset_class": "Data",
+    "security_function": "Recover",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical",
+    "evidence_required": "Evidence that backup copy exists offline/offsite/air-gapped",
+    "evidence_examples": [
+      "Offsite backup location (different building, cloud region)",
+      "Offline backup (tape, disconnected drive) rotation log",
+      "Cloud backup in separate account with separate credentials"
+    ],
+    "practical_tip": "3-2-1 rule: 3 copies, 2 media types, 1 offsite. Ransomware can't encrypt what it can't reach.",
+    "for_beginners": "Keep one backup copy that ransomware can't touch: offline drive, different cloud account, or offsite location."
+  },
+  {
+    "safeguard_id": "12.1",
+    "control_id": 12,
+    "title": "Ensure Network Infrastructure is Up-to-Date",
+    "description": "Ensure network infrastructure is kept up-to-date. Example implementations include running the latest stable release of software and/or using currently supported network as a service (NaaS) offerings. Review software versions monthly, or more frequently, to verify software support.",
+    "asset_class": "Network",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Technical + Record",
+    "evidence_required": "Evidence that network device firmware/software is current",
+    "evidence_examples": [
+      "Network device inventory with firmware versions",
+      "Vendor support status for each device (still supported?)",
+      "Monthly firmware review log"
+    ],
+    "practical_tip": "List all routers, switches, firewalls. Check vendor site for latest firmware. Update quarterly.",
+    "for_beginners": "List your network devices. For each: What firmware version? Is it latest? Check vendor website monthly."
+  },
+  {
+    "safeguard_id": "14.1",
+    "control_id": 14,
+    "title": "Establish and Maintain a Security Awareness Program",
+    "description": "Establish and maintain a security awareness program. The purpose of a security awareness program is to educate the enterprise’s workforce on how to interact with enterprise assets and data in a secure manner. Conduct training at hire and, at a minimum, annually. Review and update content annually, or when significant enterprise changes occur that could impact this Safeguard.",
+    "asset_class": "Documentation",
+    "security_function": "Govern",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Policy + Record",
+    "evidence_required": "Security awareness program documentation + training records",
+    "evidence_examples": [
+      "Security Awareness Program document/plan",
+      "Training materials (slides, videos, handouts)",
+      "Training attendance records or completion certificates"
+    ],
+    "practical_tip": "Training at hire + annual refresher. Cover: phishing, passwords, data handling, incident reporting.",
+    "for_beginners": "Start simple: 30-minute orientation for new hires, annual refresher email/video. Track who completed it."
+  },
+  {
+    "safeguard_id": "14.2",
+    "control_id": 14,
+    "title": "Train Workforce Members to Recognize Social Engineering Attacks",
+    "description": "Train workforce members to recognize social engineering attacks, such as phishing, business email compromise (BEC), pretexting, and tailgating. ",
+    "asset_class": "Users",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Record",
+    "evidence_required": "Evidence of phishing/social engineering training",
+    "evidence_examples": [
+      "Phishing simulation results (KnowBe4, Proofpoint, etc.)",
+      "Training completion records for social engineering module",
+      "Awareness materials (posters, emails) about phishing"
+    ],
+    "practical_tip": "Run phishing simulations quarterly. Train those who click. Track improvement over time.",
+    "for_beginners": "Send test phishing emails to staff. See who clicks. Train those who fail. Free tools: Gophish."
+  },
+  {
+    "safeguard_id": "14.3",
+    "control_id": 14,
+    "title": "Train Workforce Members on Authentication Best Practices",
+    "description": "Train workforce members on authentication best practices. Example topics include MFA, password composition, and credential management.",
+    "asset_class": "Users",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Record",
+    "evidence_required": "Evidence of password and MFA training",
+    "evidence_examples": [
+      "Training materials covering passwords, MFA, password managers",
+      "Training completion records",
+      "New hire onboarding checklist including auth training"
+    ],
+    "practical_tip": "Cover: strong passwords, don't reuse passwords, use MFA, recognize fake login pages.",
+    "for_beginners": "Include in new hire training: How to set strong password, how to use MFA, never share passwords."
+  },
+  {
+    "safeguard_id": "14.4",
+    "control_id": 14,
+    "title": "Train Workforce on Data Handling Best Practices",
+    "description": "Train workforce members on how to identify and properly store, transfer, archive, and destroy sensitive data. This also includes training workforce members on clear screen and desk best practices, such as locking their screen when they step away from their enterprise asset, erasing physical and virtual whiteboards at the end of meetings, and storing data and assets securely.",
+    "asset_class": "Users",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Record",
+    "evidence_required": "Evidence of data handling training",
+    "evidence_examples": [
+      "Training materials on data classification and handling",
+      "Training completion records",
+      "Clear desk/clear screen policy acknowledgment"
+    ],
+    "practical_tip": "Cover: what's confidential, how to share securely, lock screen when away, clean desk policy.",
+    "for_beginners": "Training topics: What data is sensitive? Don't email confidential data unencrypted. Lock your screen."
+  },
+  {
+    "safeguard_id": "14.5",
+    "control_id": 14,
+    "title": "Train Workforce Members on Causes of Unintentional Data Exposure",
+    "description": "Train workforce members to be aware of causes for unintentional data exposure. Example topics include mis-delivery of sensitive data, losing a portable end-user device, or publishing data to unintended audiences.",
+    "asset_class": "Users",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Record",
+    "evidence_required": "Evidence of training on accidental data exposure",
+    "evidence_examples": [
+      "Training covering: email to wrong recipient, lost devices, public sharing links",
+      "Training completion records",
+      "Real-world examples shared with staff"
+    ],
+    "practical_tip": "Common accidents: Wrong email recipient, lost USB/laptop, public cloud share links. Train on these.",
+    "for_beginners": "Train staff: Double-check email recipients. Encrypt laptops. Don't use 'Anyone with link' sharing."
+  },
+  {
+    "safeguard_id": "14.6",
+    "control_id": 14,
+    "title": "Train Workforce Members on Recognizing and Reporting Security Incidents",
+    "description": "Train workforce members to be able to recognize a potential incident and be able to report such an incident. ",
+    "asset_class": "Users",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Record",
+    "evidence_required": "Evidence of incident recognition and reporting training",
+    "evidence_examples": [
+      "Training materials on what constitutes a security incident",
+      "Incident reporting procedure shared with all staff",
+      "Training completion records"
+    ],
+    "practical_tip": "Staff should know: What's a security incident? Who to call? Better to over-report than miss something.",
+    "for_beginners": "Tell all staff: If something seems wrong (weird email, strange pop-up, lost device), report to IT immediately."
+  },
+  {
+    "safeguard_id": "14.7",
+    "control_id": 14,
+    "title": "Train Workforce on How to Identify and Report if Their Enterprise Assets are Missing Security Updates",
+    "description": "Train workforce to understand how to verify and report out-of-date software patches or any failures in automated processes and tools. Part of this training should include notifying IT personnel of any failures in automated processes and tools.",
+    "asset_class": "Users",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Record",
+    "evidence_required": "Evidence of training on recognizing and reporting missing updates",
+    "evidence_examples": [
+      "Training materials on checking for updates",
+      "Instructions on how to report update failures to IT",
+      "Training completion records"
+    ],
+    "practical_tip": "Teach users: How to check Windows Update status. Who to tell if updates are failing.",
+    "for_beginners": "Show staff: How to check if Windows is updated. Tell them: If you see 'updates failed', tell IT."
+  },
+  {
+    "safeguard_id": "14.8",
+    "control_id": 14,
+    "title": "Train Workforce on the Dangers of Connecting to and Transmitting Enterprise Data Over Insecure Networks",
+    "description": "Train workforce members on the dangers of connecting to, and transmitting data over, insecure networks for enterprise activities. If the enterprise has remote workers, training must include guidance to ensure that all users securely configure their home network infrastructure.",
+    "asset_class": "Users",
+    "security_function": "Protect",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Record",
+    "evidence_required": "Evidence of training on insecure network risks",
+    "evidence_examples": [
+      "Training materials covering public WiFi risks",
+      "VPN usage instructions for remote workers",
+      "Training completion records"
+    ],
+    "practical_tip": "Cover: Public WiFi risks, always use VPN, home router security basics for remote workers.",
+    "for_beginners": "Tell staff: Don't use coffee shop WiFi for work without VPN. At home: change default router password."
+  },
+  {
+    "safeguard_id": "15.1",
+    "control_id": 15,
+    "title": "Establish and Maintain an Inventory of Service Providers",
+    "description": "Establish and maintain an inventory of service providers. The inventory is to list all known service providers, include classification(s), and designate an enterprise contact for each service provider. Review and update the inventory annually, or when significant enterprise changes occur that could impact this Safeguard. ",
+    "asset_class": "Users",
+    "security_function": "Identify",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Record",
+    "evidence_required": "List of all third-party service providers with contact info",
+    "evidence_examples": [
+      "Vendor inventory: Name, service provided, data access level, contract owner, contact info",
+      "Classification of vendors by risk level",
+      "Annual review record of vendor list"
+    ],
+    "practical_tip": "List all vendors who access your data or systems. Include: cloud providers, IT support, SaaS apps.",
+    "for_beginners": "Spreadsheet: Vendor name, what they do for us, do they access our data?, contract expiry, our contact person."
+  },
+  {
+    "safeguard_id": "17.1",
+    "control_id": 17,
+    "title": "Designate Personnel to Manage Incident Handling",
+    "description": "Designate one key person, and at least one backup, who will manage the enterprise’s incident handling process. Management personnel are responsible for the coordination and documentation of incident response and recovery efforts and can consist of employees internal to the enterprise, service providers, or a hybrid approach. If using a service provider, designate at least one person internal to the enterprise to oversee any third-party work. Review annually, or when significant enterprise changes occur that could impact this Safeguard.",
+    "asset_class": "Users",
+    "security_function": "Respond",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Record",
+    "evidence_required": "Named incident handler + backup",
+    "evidence_examples": [
+      "Incident Response Plan naming primary and backup handlers",
+      "Contact list with incident handler names and phone numbers",
+      "Job description or role assignment document"
+    ],
+    "practical_tip": "Name one person as incident lead + one backup. Make sure everyone knows who to call.",
+    "for_beginners": "Write down: 'Security incidents are handled by [Name, Phone]. Backup: [Name, Phone].' Share with all staff."
+  },
+  {
+    "safeguard_id": "17.2",
+    "control_id": 17,
+    "title": "Establish and Maintain Contact Information for Reporting Security Incidents",
+    "description": "Establish and maintain contact information for parties that need to be informed of security incidents. Contacts may include internal staff, service providers, law enforcement, cyber insurance providers, relevant government agencies, Information Sharing and Analysis Center (ISAC) partners, or other stakeholders. Verify contacts annually to ensure that information is up-to-date.",
+    "asset_class": "Documentation",
+    "security_function": "Govern",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Record",
+    "evidence_required": "Incident contact list including internal and external parties",
+    "evidence_examples": [
+      "Contact list: Internal IT, management, legal, external (law enforcement, cyber insurance, CERT)",
+      "Escalation matrix",
+      "Annual verification that contacts are current"
+    ],
+    "practical_tip": "Include: Internal team, management, legal, cyber insurance, law enforcement (if needed), CERT.",
+    "for_beginners": "Contact list: 1) IT lead, 2) Management, 3) Legal/HR, 4) Cyber insurance hotline. Verify annually."
+  },
+  {
+    "safeguard_id": "17.3",
+    "control_id": 17,
+    "title": "Establish and Maintain an Enterprise Process for Reporting Incidents",
+    "description": "Establish and maintain a documented enterprise process for the workforce to report security incidents. The process includes reporting timeframe, personnel to report to, mechanism for reporting, and the minimum information to be reported. Ensure the process is publicly available to all of the workforce. Review annually, or when significant enterprise changes occur that could impact this Safeguard.",
+    "asset_class": "Documentation",
+    "security_function": "Govern",
+    "ig1": true,
+    "ig2": true,
+    "ig3": true,
+    "evidence_type": "Procedure",
+    "evidence_required": "Documented incident reporting process shared with all staff",
+    "evidence_examples": [
+      "Incident Reporting Procedure document",
+      "Reporting form or ticketing system for incidents",
+      "Evidence that process is communicated to all staff (email, intranet, posters)"
+    ],
+    "practical_tip": "Simple process: What to report, how to report (email/phone/form), who to report to, what info to include.",
+    "for_beginners": "One-page guide: 'See something suspicious? Email security@company.com or call IT. Include: what happened, when, what you did.'"
+  }
+]
