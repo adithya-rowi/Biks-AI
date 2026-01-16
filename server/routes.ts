@@ -14,6 +14,7 @@ import { parseDocumentFromBuffer, isSupportedFile } from "./services/landing-ai"
 import { indexDocument } from "./services/ragie";
 import { runAssessment, getAssessmentRunStatus } from "./services/assessment";
 import { generateAssessmentReport } from "./services/pdf-export";
+import { calculateSafeguardScore, calculateAssessmentStats } from "./services/scoring";
 
 // Configure multer for file uploads
 const UPLOAD_DIR = process.env.UPLOAD_DIR || "./uploads";
@@ -536,6 +537,36 @@ export async function registerRoutes(
           action: "criterion_updated",
           details: updateData,
         });
+      }
+
+      // Recalculate safeguard score if status changed
+      if (updateData.status && criterion.safeguardId) {
+        const allCriteria = await storage.getCriteriaBySafeguard(criterion.safeguardId);
+        const scoreResult = calculateSafeguardScore(
+          allCriteria.map((c) => ({ status: c.status as 'met' | 'partial' | 'not_met' | 'insufficient' }))
+        );
+        await storage.updateSafeguard(criterion.safeguardId, {
+          score: scoreResult.score,
+          status: scoreResult.status,
+        });
+
+        // Also recalculate assessment stats
+        const safeguard = await storage.getSafeguard(criterion.safeguardId);
+        if (safeguard) {
+          const allSafeguards = await storage.getSafeguardsByAssessment(safeguard.assessmentId);
+          const stats = calculateAssessmentStats(
+            allSafeguards.map((s) => ({
+              score: s.id === safeguard.id ? scoreResult.score : s.score,
+              status: s.id === safeguard.id ? scoreResult.status : (s.status as 'covered' | 'partial' | 'gap'),
+            }))
+          );
+          await storage.updateAssessment(safeguard.assessmentId, {
+            maturityScore: stats.maturityScore,
+            controlsCovered: stats.controlsCovered,
+            controlsPartial: stats.controlsPartial,
+            controlsGap: stats.controlsGap,
+          });
+        }
       }
 
       res.json(criterion);
