@@ -10,16 +10,16 @@ export default function Overview() {
     queryFn: api.assessments.getAll,
   });
 
-  const { data: findings = [] } = useQuery({
-    queryKey: ['findings'],
-    queryFn: async () => {
-      if (assessments.length === 0) return [];
-      return api.findings.getByAssessment(assessments[0].id);
-    },
-    enabled: assessments.length > 0,
-  });
+  const activeAssessment = assessments.find(a => a.status === 'in_progress') || assessments[0];
 
-  const activeAssessment = assessments.find(a => a.status === 'in_progress');
+  const { data: findings = [] } = useQuery({
+    queryKey: ['findings', activeAssessment?.id],
+    queryFn: async () => {
+      if (!activeAssessment) return [];
+      return api.findings.getByAssessment(activeAssessment.id);
+    },
+    enabled: !!activeAssessment,
+  });
   const maturityScore = activeAssessment?.maturityScore || 0;
   const maxScore = 100;
   const openFindings = findings.filter(f => f.status === 'open' || f.status === 'in_progress').length;
