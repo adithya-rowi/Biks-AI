@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { Button } from '@/components/ui/button';
@@ -45,11 +45,44 @@ const formatUploadDate = (dateString: Date | null | undefined) => {
 export default function Documents() {
   const [isDragging, setIsDragging] = useState(false);
   const queryClient = useQueryClient();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { data: documents = [] } = useQuery({
     queryKey: ['documents'],
     queryFn: api.documents.getAll,
   });
+
+  const uploadMutation = useMutation({
+    mutationFn: async (file: File) => {
+      const fileType = file.name.endsWith('.pdf') ? 'policy'
+        : file.name.endsWith('.docx') || file.name.endsWith('.doc') ? 'procedure'
+        : 'evidence';
+      return api.documents.create({
+        name: file.name,
+        version: '1.0',
+        type: fileType,
+        uploadedBy: 'Current User',
+        fileSize: file.size,
+        mimeType: file.type,
+        status: 'uploading',
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['documents'] });
+    },
+  });
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      Array.from(files).forEach(file => uploadMutation.mutate(file));
+    }
+    e.target.value = '';
+  };
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -79,14 +112,28 @@ export default function Documents() {
 
   return (
     <div className="max-w-[1200px] mx-auto space-y-6" data-testid="page-documents">
+      <input
+        ref={fileInputRef}
+        type="file"
+        multiple
+        accept=".pdf,.doc,.docx,.xls,.xlsx"
+        onChange={handleFileSelect}
+        className="hidden"
+      />
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-[22px] font-semibold text-[#111827] tracking-tight">Documents</h1>
           <p className="text-[13px] text-[#6B7280] mt-1">Source documents for security assessment</p>
         </div>
-        <Button size="sm" className="h-8 gap-1.5 text-[13px] font-medium shadow-sm" data-testid="button-upload-documents">
+        <Button
+          size="sm"
+          className="h-8 gap-1.5 text-[13px] font-medium shadow-sm"
+          data-testid="button-upload-documents"
+          onClick={handleUploadClick}
+          disabled={uploadMutation.isPending}
+        >
           <Upload className="w-3.5 h-3.5" strokeWidth={2} />
-          Upload Documents
+          {uploadMutation.isPending ? 'Uploading...' : 'Upload Documents'}
         </Button>
       </div>
 
@@ -120,9 +167,15 @@ export default function Documents() {
             <FileText className="w-10 h-10 text-[#D1D5DB] mb-3" strokeWidth={1.5} />
             <p className="text-[14px] font-medium text-[#374151] mb-1">No documents uploaded</p>
             <p className="text-[13px] text-[#6B7280] mb-4">Upload security policies to begin assessment</p>
-            <Button size="sm" className="h-8 gap-1.5 text-[13px] font-medium shadow-sm" data-testid="button-upload-empty">
+            <Button
+              size="sm"
+              className="h-8 gap-1.5 text-[13px] font-medium shadow-sm"
+              data-testid="button-upload-empty"
+              onClick={handleUploadClick}
+              disabled={uploadMutation.isPending}
+            >
               <Upload className="w-3.5 h-3.5" strokeWidth={2} />
-              Upload Documents
+              {uploadMutation.isPending ? 'Uploading...' : 'Upload Documents'}
             </Button>
           </div>
         </div>
